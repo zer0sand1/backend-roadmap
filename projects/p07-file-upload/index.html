@@ -16,13 +16,13 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 3 — Real-time & Async</div>
+    <div class="phase">Phase 3 - Real-time & Async</div>
     <h1>File Upload Service with Async Processing</h1>
     <div class="subtitle">Multipart uploads, image processing, task queues, CDN simulation</div>
     <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>Celery</span><span>Redis</span><span>Pillow</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Build a service that accepts file uploads, validates them (type, size), processes them asynchronously (generate thumbnails), and stores them with a content-addressable scheme. Use Celery + Redis for background tasks. Simulate a CDN by serving files from a separate port/domain. This project teaches async task queues, file handling patterns, caching, and separation of concerns.</p>
     <pre>
 Client --> POST /upload --> FastAPI --> Celery Producer --> Redis Broker
@@ -37,8 +37,8 @@ Client --> POST /upload --> FastAPI --> Celery Producer --> Redis Broker
                                                    (separate port)
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>POST /upload accepts multipart file with validation (max 50MB, allowed types: jpg/png/pdf)</li>
       <li>POST /upload returns task_id immediately (async processing)</li>
@@ -51,8 +51,8 @@ Client --> POST /upload --> FastAPI --> Celery Producer --> Redis Broker
       <li>Virus scanning placeholder (simulated check in worker)</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Multipart/form-data encoding and streaming file uploads</li>
       <li>Celery architecture: broker (Redis/RabbitMQ), worker, result backend</li>
@@ -62,8 +62,8 @@ Client --> POST /upload --> FastAPI --> Celery Producer --> Redis Broker
       <li>Task queue vs message queue: differences and use cases</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>FastAPI UploadFile and streaming file handling (avoid loading into memory)</li>
       <li>Celery task definition, configuration, and worker execution</li>
@@ -73,8 +73,8 @@ Client --> POST /upload --> FastAPI --> Celery Producer --> Redis Broker
       <li>Task status tracking with Celery result backend</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Install Celery + Redis, configure Celery app in FastAPI</li>
       <li>Create FileUpload endpoint with size/type validation</li>
@@ -88,10 +88,10 @@ Client --> POST /upload --> FastAPI --> Celery Producer --> Redis Broker
       <li>Test with curl -F "file=@photo.jpg" and verify thumbnails</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
-      <li>Upload a 10MB file — it returns immediately and processes in background</li>
+      <li>Upload a 10MB file - it returns immediately and processes in background</li>
       <li>Three thumbnail sizes exist after processing completes</li>
       <li>Uploading the same file twice stores only one copy (dedup by hash)</li>
       <li>Celery worker runs as a separate process (celery -A tasks worker --loglevel=info)</li>

@@ -3,92 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Backend Engineering Roadmap &mdash; 18 Projects</title>
+<title>Backend Engineering Roadmap</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
-<style>
-  .hero {
-    padding: 48px 0 32px;
-  }
-  .hero h1 {
-    font-size: 38px;
-    font-weight: 900;
-    line-height: 1.15;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 12px;
-  }
-  .hero p { font-size: 15px; color: var(--text2); max-width: 640px; }
-  .hero .meta {
-    display: flex; gap: 20px; flex-wrap: wrap;
-    margin-top: 20px; font-size: 13px; color: var(--text2);
-  }
-  .hero .meta span { display: flex; align-items: center; gap: 6px; }
-
-  .section-title {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    color: var(--text2);
-    margin: 32px 0 16px;
-  }
-  .phase-grid { display: grid; gap: 16px; }
-  .phase-block {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 24px;
-  }
-  .phase-block h3 {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .phase-block .phase-desc {
-    font-size: 13px;
-    color: var(--text2);
-    margin-bottom: 12px;
-  }
-
-  .tech-overview {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 10px;
-    margin: 20px 0;
-  }
-  .how-to-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  @media (max-width: 640px) {
-    .how-to-grid { grid-template-columns: 1fr; }
-    .concept-map { font-size: 12px !important; line-height: 1.9 !important; padding: 16px !important; }
-    .hero h1 { font-size: 28px; }
-    .hero p { font-size: 14px; }
-  }
-  .tech-item {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-  }
-  .tech-item h4 { font-size: 13px; font-weight: 600; }
-  .tech-item p { font-size: 11px; color: var(--text2); }
-  .tech-item .lvl {
-    display: inline-block;
-    font-size: 10px;
-    padding: 1px 6px;
-    border-radius: 4px;
-    margin-top: 4px;
-    font-weight: 600;
-  }
-  .lvl-core { background: rgba(99,102,241,.15); color: var(--accent); }
-  .lvl-nice { background: rgba(6,182,212,.12); color: var(--accent2); }
-</style>
 </head>
 <body>
 
@@ -101,28 +19,30 @@
 <div class="container">
   <div class="hero">
     <h1>Backend Engineering Roadmap</h1>
-    <p>18 projects from HTTP fundamentals to production-ready microservices. Every project builds on the last, introducing one new first-principle concept at a time. Python + TypeScript, startup-ready.</p>
+    <p>18 projects from HTTP fundamentals to production-ready microservices. Each builds on the last, introducing one first-principle concept at a time.</p>
     <div class="meta">
-      <span>&#128736; Python + TypeScript</span>
-      <span>&#127891; Fresher / Startup-ready</span>
-      <span>&#9200; ~5&ndash;7 months</span>
-      <span>&#128214; First-principles focus</span>
+      <span>Python &amp; TypeScript</span>
+      <span>Startup-ready</span>
+      <span>~5&ndash;7 months</span>
+      <span>First-principles focus</span>
     </div>
   </div>
 
-  <div class="section-title">&#128640; The Projects</div>
+  <div class="section">
+    <div class="section-label">The Projects</div>
 
-  <div class="project-list">
-    <!-- PHASE 1: Foundations -->
+    <!-- PHASE 1 -->
     <div class="phase-block">
-      <h3>Phase 1 &mdash; Foundations</h3>
-      <div class="phase-desc">Understand the internet: TCP, HTTP, REST, Web Frameworks</div>
+      <div class="phase-block-header">
+        <h3>Phase 1 &mdash; Foundations</h3>
+        <div class="phase-desc">TCP, HTTP, REST, web frameworks</div>
+      </div>
       <div class="project-list">
         <a href="projects/p01-http-server/">
           <span class="num">01</span>
           <span class="info">
             <span class="name">Custom HTTP Server from Scratch</span>
-            <span class="desc">Raw TCP sockets, parse HTTP/1.1, build a router &mdash; no frameworks</span>
+            <span class="desc">Raw sockets, parse HTTP/1.1, build a router with no frameworks</span>
           </span>
           <span class="phase-tag phase-foundations">Python</span>
         </a>
@@ -145,10 +65,12 @@
       </div>
     </div>
 
-    <!-- PHASE 2: Access & Control -->
+    <!-- PHASE 2 -->
     <div class="phase-block">
-      <h3>Phase 2 &mdash; Access &amp; Control</h3>
-      <div class="phase-desc">Authentication, authorization, rate limiting, middleware patterns</div>
+      <div class="phase-block-header">
+        <h3>Phase 2 &mdash; Access &amp; Control</h3>
+        <div class="phase-desc">Authentication, authorization, rate limiting, middleware</div>
+      </div>
       <div class="project-list">
         <a href="projects/p04-auth/">
           <span class="num">04</span>
@@ -169,10 +91,12 @@
       </div>
     </div>
 
-    <!-- PHASE 3: Real-time & Async -->
+    <!-- PHASE 3 -->
     <div class="phase-block">
-      <h3>Phase 3 &mdash; Real-time &amp; Async</h3>
-      <div class="phase-desc">WebSockets, pub/sub, async task processing, file handling</div>
+      <div class="phase-block-header">
+        <h3>Phase 3 &mdash; Real-time &amp; Async</h3>
+        <div class="phase-desc">WebSockets, pub/sub, async processing, file handling</div>
+      </div>
       <div class="project-list">
         <a href="projects/p06-websocket-chat/">
           <span class="num">06</span>
@@ -193,10 +117,12 @@
       </div>
     </div>
 
-    <!-- PHASE 4: Reliability -->
+    <!-- PHASE 4 -->
     <div class="phase-block">
-      <h3>Phase 4 &mdash; Reliability &amp; Correctness</h3>
-      <div class="phase-desc">Transactions, concurrency, testing methodology</div>
+      <div class="phase-block-header">
+        <h3>Phase 4 &mdash; Reliability &amp; Correctness</h3>
+        <div class="phase-desc">Transactions, concurrency, testing methodology</div>
+      </div>
       <div class="project-list">
         <a href="projects/p08-order-service/">
           <span class="num">08</span>
@@ -217,10 +143,12 @@
       </div>
     </div>
 
-    <!-- PHASE 5: Events -->
+    <!-- PHASE 5 -->
     <div class="phase-block">
-      <h3>Phase 5 &mdash; Events &amp; Communication</h3>
-      <div class="phase-desc">Full-text search, message queues, webhooks, gRPC</div>
+      <div class="phase-block-header">
+        <h3>Phase 5 &mdash; Events &amp; Communication</h3>
+        <div class="phase-desc">Full-text search, message queues, webhooks, gRPC</div>
+      </div>
       <div class="project-list">
         <a href="projects/p10-search-engine/">
           <span class="num">10</span>
@@ -257,10 +185,12 @@
       </div>
     </div>
 
-    <!-- PHASE 6: Performance -->
+    <!-- PHASE 6 -->
     <div class="phase-block">
-      <h3>Phase 6 &mdash; Performance &amp; Visibility</h3>
-      <div class="phase-desc">Caching strategies, monitoring, distributed tracing</div>
+      <div class="phase-block-header">
+        <h3>Phase 6 &mdash; Performance &amp; Visibility</h3>
+        <div class="phase-desc">Caching, monitoring, distributed tracing</div>
+      </div>
       <div class="project-list">
         <a href="projects/p14-caching/">
           <span class="num">14</span>
@@ -281,10 +211,12 @@
       </div>
     </div>
 
-    <!-- PHASE 7: TypeScript -->
+    <!-- PHASE 7 -->
     <div class="phase-block">
-      <h3>Phase 7 &mdash; TypeScript &amp; Modern APIs</h3>
-      <div class="phase-desc">TypeScript backend expertise, Express, Prisma, GraphQL</div>
+      <div class="phase-block-header">
+        <h3>Phase 7 &mdash; TypeScript &amp; Modern APIs</h3>
+        <div class="phase-desc">TypeScript backend, Express, Prisma, GraphQL</div>
+      </div>
       <div class="project-list">
         <a href="projects/p16-express-ts/">
           <span class="num">16</span>
@@ -305,10 +237,12 @@
       </div>
     </div>
 
-    <!-- PHASE 8: Production -->
+    <!-- PHASE 8 -->
     <div class="phase-block">
-      <h3>Phase 8 &mdash; Production</h3>
-      <div class="phase-desc">Containerization, CI/CD, cloud deployment</div>
+      <div class="phase-block-header">
+        <h3>Phase 8 &mdash; Production</h3>
+        <div class="phase-desc">Containerization, CI/CD, cloud deployment</div>
+      </div>
       <div class="project-list">
         <a href="projects/p18-docker-deploy/">
           <span class="num">18</span>
@@ -322,75 +256,82 @@
     </div>
   </div>
 
-  <div class="section-title" id="tech">&#128295; Technology Stack</div>
-  <p class="text-2 mb-16">Core = must know deeply. Nice = understand and have used at least once.</p>
-  <div class="tech-overview">
-    <div class="tech-item"><h4>Python</h4><p>Primary language</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>TypeScript</h4><p>Secondary language</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>FastAPI</h4><p>Python web framework</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>PostgreSQL</h4><p>Primary database</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>Redis</h4><p>Caching, pub/sub, queues</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>SQLAlchemy</h4><p>ORM toolkit</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>Docker</h4><p>Containerization</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>Docker Compose</h4><p>Multi-service orchestration</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>Git</h4><p>Version control</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>REST APIs</h4><p>API design principles</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>pytest</h4><p>Testing framework</p><span class="lvl lvl-core">Core</span></div>
-    <div class="tech-item"><h4>RabbitMQ</h4><p>Message broker</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>Celery</h4><p>Async task queue</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>JWT / OAuth2</h4><p>Auth protocols</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>Prometheus + Grafana</h4><p>Metrics &amp; dashboards</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>OpenTelemetry</h4><p>Distributed tracing</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>GraphQL</h4><p>Alternative API paradigm</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>WebSockets</h4><p>Real-time communication</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>gRPC</h4><p>High-performance RPC</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>Nginx</h4><p>Reverse proxy / LB</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>GitHub Actions</h4><p>CI/CD pipelines</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>Express</h4><p>Node.js web framework</p><span class="lvl lvl-nice">Nice</span></div>
-    <div class="tech-item"><h4>Prisma</h4><p>TypeScript ORM</p><span class="lvl lvl-nice">Nice</span></div>
-  </div>
-
-  <hr>
-
-  <h2 style="font-size:15px;font-weight:700;margin-bottom:12px;">&#128279; Concept Dependency Map</h2>
-  <div class="concept-map" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;font-size:13px;line-height:2.2;color:var(--text2);">
-    <div><strong style="color:var(--accent);">TCP/Sockets</strong> &rarr; <strong style="color:var(--text);">HTTP</strong> &rarr; <strong style="color:var(--text);">REST</strong> &rarr; <strong style="color:var(--text);">FastAPI</strong> &rarr; <strong style="color:var(--text);">Database CRUD</strong> &rarr; <strong style="color:var(--text);">Auth</strong></div>
-    <div><strong style="color:var(--accent);">HTTP</strong> &rarr; <strong style="color:var(--text);">Middleware</strong> &rarr; <strong style="color:var(--text);">Rate Limiting</strong> &rarr; <strong style="color:var(--text);">Caching</strong></div>
-    <div><strong style="color:var(--accent);">Database</strong> &rarr; <strong style="color:var(--text);">Transactions</strong> &rarr; <strong style="color:var(--text);">Concurrency Control</strong> &rarr; <strong style="color:var(--text);">Idempotency</strong></div>
-    <div><strong style="color:var(--accent);">WebSockets</strong> &rarr; <strong style="color:var(--text);">Pub/Sub</strong> &rarr; <strong style="color:var(--text);">Real-time</strong></div>
-    <div><strong style="color:var(--accent);">Message Queues</strong> &rarr; <strong style="color:var(--text);">Async Workers</strong> &rarr; <strong style="color:var(--text);">Webhooks</strong> &rarr; <strong style="color:var(--text);">Event-Driven</strong></div>
-    <div><strong style="color:var(--accent);">Protocol Buffers</strong> &rarr; <strong style="color:var(--text);">gRPC</strong> &rarr; <strong style="color:var(--text);">Service Communication</strong></div>
-    <div><strong style="color:var(--accent);">Search Indexes</strong> &rarr; <strong style="color:var(--text);">Tokenization</strong> &rarr; <strong style="color:var(--text);">Ranking (TF-IDF / BM25)</strong></div>
-    <div><strong style="color:var(--accent);">Logging</strong> + <strong style="color:var(--accent);">Metrics</strong> + <strong style="color:var(--accent);">Tracing</strong> &rarr; <strong style="color:var(--text);">Observability</strong></div>
-    <div><strong style="color:var(--accent);">REST</strong> &rarr; <strong style="color:var(--text);">GraphQL</strong> &rarr; <strong style="color:var(--text);">DataLoader</strong></div>
-    <div><strong style="color:var(--accent);">Docker</strong> + <strong style="color:var(--accent);">Compose</strong> + <strong style="color:var(--accent);">Actions</strong> &rarr; <strong style="color:var(--text);">Cloud Deploy</strong></div>
-  </div>
-
-  <hr>
-
-  <h2 style="font-size:15px;font-weight:700;margin-bottom:12px;">&#128220; How to Use This Roadmap</h2>
-  <div class="how-to-grid">
-    <div class="card">
-      <h2>1. Build, Don't Copy</h2>
-      <p>Type every line yourself. Read error messages. Use debuggers. Understand before moving on.</p>
-    </div>
-    <div class="card">
-      <h2>2. Read Deeply</h2>
-      <p>When stuck, search for "why" not "how". Read RFCs, source code, and engineering blogs.</p>
-    </div>
-    <div class="card">
-      <h2>3. Verify Every Goal</h2>
-      <p>Each project has concrete verification goals. Don't move on until you pass them all.</p>
-    </div>
-    <div class="card">
-      <h2>4. Portfolio Ready</h2>
-      <p>Push every project to GitHub. Write good READMEs. Be ready to explain your design choices.</p>
+  <div class="section" id="tech">
+    <div class="section-label">Technology Stack</div>
+    <p class="text-2 mb-16">Core skills to know deeply. Nice-to-haves to understand.</p>
+    <div class="tech-overview">
+      <div class="tech-item"><h4>Python</h4><p>Primary language</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>TypeScript</h4><p>Secondary language</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>FastAPI</h4><p>Web framework</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>PostgreSQL</h4><p>Primary database</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>Redis</h4><p>Caching &amp; pub/sub</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>SQLAlchemy</h4><p>ORM toolkit</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>Docker</h4><p>Containerization</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>Docker Compose</h4><p>Orchestration</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>Git</h4><p>Version control</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>REST APIs</h4><p>API design</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>pytest</h4><p>Testing</p><span class="lvl lvl-core">Core</span></div>
+      <div class="tech-item"><h4>RabbitMQ</h4><p>Message broker</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>Celery</h4><p>Task queue</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>JWT / OAuth2</h4><p>Auth protocols</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>Prometheus</h4><p>Metrics</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>OpenTelemetry</h4><p>Tracing</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>GraphQL</h4><p>API paradigm</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>WebSockets</h4><p>Real-time</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>gRPC</h4><p>RPC framework</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>Nginx</h4><p>Reverse proxy</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>GitHub Actions</h4><p>CI/CD</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>Express</h4><p>Node framework</p><span class="lvl lvl-nice">Nice</span></div>
+      <div class="tech-item"><h4>Prisma</h4><p>TypeScript ORM</p><span class="lvl lvl-nice">Nice</span></div>
     </div>
   </div>
 
   <hr>
 
-  <p class="text-2" style="font-size:13px;text-align:center;">Built with &#9829; for backend engineers who want to build real things.</p>
+  <div class="section">
+    <div class="section-label">Concept Dependencies</div>
+    <div class="concept-map">
+      <div><strong>TCP/Sockets</strong> &rarr; HTTP &rarr; REST &rarr; FastAPI &rarr; Database CRUD &rarr; Auth</div>
+      <div><strong>HTTP</strong> &rarr; Middleware &rarr; Rate Limiting &rarr; Caching</div>
+      <div><strong>Database</strong> &rarr; Transactions &rarr; Concurrency Control &rarr; Idempotency</div>
+      <div><strong>WebSockets</strong> &rarr; Pub/Sub &rarr; Real-time</div>
+      <div><strong>Message Queues</strong> &rarr; Async Workers &rarr; Webhooks &rarr; Event-Driven</div>
+      <div><strong>Protocol Buffers</strong> &rarr; gRPC &rarr; Service Communication</div>
+      <div><strong>Search Indexes</strong> &rarr; Tokenization &rarr; Ranking (TF-IDF / BM25)</div>
+      <div><strong>Logging</strong> + <strong>Metrics</strong> + <strong>Tracing</strong> &rarr; Observability</div>
+      <div><strong>REST</strong> &rarr; GraphQL &rarr; DataLoader</div>
+      <div><strong>Docker</strong> + <strong>Compose</strong> + <strong>Actions</strong> &rarr; Cloud Deploy</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">How to Use This Roadmap</div>
+    <div class="how-to-grid">
+      <div class="card">
+        <h2>1. Build, Don't Copy</h2>
+        <p>Type every line yourself. Read error messages. Use debuggers. Understand before moving on.</p>
+      </div>
+      <div class="card">
+        <h2>2. Read Deeply</h2>
+        <p>When stuck, search for why not how. Read RFCs, source code, and engineering blogs.</p>
+      </div>
+      <div class="card">
+        <h2>3. Verify Every Goal</h2>
+        <p>Each project has concrete verification goals. Don't move on until you pass them all.</p>
+      </div>
+      <div class="card">
+        <h2>4. Portfolio Ready</h2>
+        <p>Push every project to GitHub. Write good READMEs. Be ready to explain your design choices.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built for backend engineers who want to build real things.
+  </div>
 </div>
+
 </body>
 </html>

@@ -18,15 +18,15 @@
 
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 2 &mdash; Access & Control</div>
+    <div class="phase">Phase 2 - Access & Control</div>
     <h1>Rate Limiter & API Gateway Middleware</h1>
     <div class="subtitle">Protect your API with Redis-based rate limiting and middleware</div>
     <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>Redis</span><span>ASGI</span></div>
   </div>
 
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
-    <p>Implement rate limiting on your URL shortener using Redis. Support both token bucket and sliding window algorithms. Build it as reusable ASGI middleware. Also add request logging, API key validation, and request transformation. These are the building blocks of an API gateway. Rate limiting is essential for production APIs — it prevents abuse, ensures fair usage, and protects backend resources.</p>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
+    <p>Implement rate limiting on your URL shortener using Redis. Support both token bucket and sliding window algorithms. Build it as reusable ASGI middleware. Also add request logging, API key validation, and request transformation. These are the building blocks of an API gateway. Rate limiting is essential for production APIs - it prevents abuse, ensures fair usage, and protects backend resources.</p>
     <pre>
 +--------+     Request      +------------------+     +----------+
 | Client |  ------------->  |  ASGI Middleware  | --> | FastAPI  |
@@ -42,8 +42,8 @@
     </pre>
   </div>
 
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Implement sliding window rate limiter using Redis sorted sets</li>
       <li>Implement token bucket rate limiter for comparison</li>
@@ -56,8 +56,8 @@
     </ul>
   </div>
 
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Rate limiting algorithms: token bucket, sliding window, fixed window, leaky bucket (read "Rate Limiting Fundamentals" by Stripe)</li>
       <li>Redis data types: STRING, SET, Sorted Set, Lua scripting for atomicity</li>
@@ -68,8 +68,8 @@
     </ul>
   </div>
 
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>Writing ASGI middleware using the call_next pattern</li>
       <li>Redis sorted sets for sliding window counters (ZREMRANGEBYSCORE, ZCARD)</li>
@@ -80,8 +80,8 @@
     </ul>
   </div>
 
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Set up Redis connection pool in FastAPI</li>
       <li>Implement SlidingWindowRateLimiter class using Redis sorted sets</li>
@@ -96,8 +96,8 @@
     </ol>
   </div>
 
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>After N requests in T seconds, API returns 429 Too Many Requests with Retry-After</li>
       <li>Rate limit resets after the window expires (wait and retry succeeds)</li>
@@ -105,7 +105,7 @@
       <li>Rate limit headers present on every response</li>
       <li>With Redis down, server continues in "fail-open" mode (or "fail-closed" configurable)</li>
       <li>Lua script performs window check + increment in a single atomic operation</li>
-      <li>Sliding window and token bucket both work correctly — testable via /limiter-test endpoint</li>
+      <li>Sliding window and token bucket both work correctly - testable via /limiter-test endpoint</li>
     </ul>
   </div>
 

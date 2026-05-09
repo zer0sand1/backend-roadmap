@@ -16,13 +16,13 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 5 — Events & Communication</div>
+    <div class="phase">Phase 5 - Events & Communication</div>
     <h1>Full-Text Search Engine</h1>
     <div class="subtitle">Inverted indexes, relevance scoring, type-ahead, fuzzy search</div>
     <div class="tech-badges"><span>Python</span><span>PostgreSQL FTS</span><span>TypeScript/Node</span><span>Elasticsearch (optional)</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Build a search service over the URL shortener's bookmarks or a set of documents. Implement full-text search using PostgreSQL's built-in FTS first, then optionally rewrite with Elasticsearch. Learn inverted indexes, tokenization, stemming, relevance scoring (TF-IDF, BM25), and typo-tolerant search with Levenshtein distance.</p>
     <pre>
 User Query: "blue suede shoes"
@@ -40,8 +40,8 @@ PostgreSQL  Elasticsearch
    results sorted by relevance (ts_rank / _score)
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Index bookmarks/documents with title, description, content, tags</li>
       <li>Full-text search across all fields with ranking</li>
@@ -54,20 +54,20 @@ PostgreSQL  Elasticsearch
       <li>PostgreSQL FTS implementation first, then optional Elasticsearch</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Inverted index data structure (posting lists, term dictionary)</li>
       <li>Tokenization, stemming, stop words, normalization (read "Introduction to Information Retrieval" Ch 1-2)</li>
-      <li>TF-IDF and BM25 ranking algorithms — how they work mathematically</li>
+      <li>TF-IDF and BM25 ranking algorithms - how they work mathematically</li>
       <li>PostgreSQL full-text search: tsvector, tsquery, ts_rank, GIN indexes</li>
       <li>Trigrams for fuzzy matching (pg_trgm extension)</li>
       <li>Levenshtein distance algorithm for typo tolerance</li>
       <li>Elasticsearch query DSL (match, multi_match, bool, function_score)</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>PostgreSQL tsvector generation and tsquery matching</li>
       <li>GIN indexes for full-text search performance</li>
@@ -78,8 +78,8 @@ PostgreSQL  Elasticsearch
       <li>Elasticsearch indexing, mapping, and query DSL (optional stretch)</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Add search_vector tsvector column to documents table</li>
       <li>Create GIN index on search_vector</li>
@@ -93,8 +93,8 @@ PostgreSQL  Elasticsearch
       <li>Load test with 10K+ documents</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>Search "blue shoe" finds "blue suede shoes" (stemming works)</li>
       <li>Relevant results appear before less relevant ones (check score ordering)</li>

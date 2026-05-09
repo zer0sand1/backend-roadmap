@@ -16,13 +16,13 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 6 — Performance & Visibility</div>
+    <div class="phase">Phase 6 - Performance & Visibility</div>
     <h1>Caching Layer &amp; CDN Simulator</h1>
     <div class="subtitle">Cache strategies, invalidation, distributed caching, TTL, eviction</div>
     <div class="tech-badges"><span>Python</span><span>Redis</span><span>FastAPI</span><span>LRU</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Build a caching layer for the URL shortener and file service. Implement multiple cache strategies: cache-aside, write-through, write-behind. Build an LRU cache from scratch. Add Redis-based distributed caching with TTL. Implement cache invalidation on data updates. Simulate a CDN edge cache with origin pull and stale-while-revalidate patterns.</p>
     <pre>
 +--------+    Request    +----------+    Cache Check    +----------+
@@ -37,8 +37,8 @@
                          +----------+
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>LRU cache implementation from scratch (doubly linked list + hashmap)</li>
       <li>Cache-aside pattern: read from cache first, on miss read DB + populate cache</li>
@@ -52,8 +52,8 @@
       <li>Cache statistics: hit rate, miss rate, eviction count, average latency</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Cache strategies: cache-aside, read-through, write-through, write-behind (read "AWS Caching Patterns" or "Database Caching with Redis")</li>
       <li>Cache invalidation: TTL, event-driven, write-invalidate, write-update</li>
@@ -63,8 +63,8 @@
       <li>Redis data structures for caching: SET with TTL, Hash for partial updates</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>Implementing LRU cache with O(1) operations (doubly linked list + hashmap)</li>
       <li>Redis SET/GET with TTL for distributed caching</li>
@@ -75,8 +75,8 @@
       <li>Measuring cache performance (hit ratio, latency improvement)</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Implement LRU cache class in Python (Node class, hashmap, doubly linked list)</li>
       <li>Test LRU correctness (insert, access, eviction order)</li>
@@ -90,13 +90,13 @@
       <li>Benchmark: cache hit vs miss latency</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>Cache hit serves response in &lt;5ms, cache miss + DB in &lt;50ms (measurable)</li>
       <li>LRU eviction removes least recently used entry when full</li>
       <li>Updating a URL immediately invalidates its cache entry</li>
-      <li>10 concurrent requests for a missing key — only 1 hits the database</li>
+      <li>10 concurrent requests for a missing key - only 1 hits the database</li>
       <li>TTL expiration automatically refreshes cache on next request</li>
       <li>Stale-while-revalidate serves stale data within 60s TTL window</li>
       <li>Cache hit ratio &gt; 80% on repeated URL accesses</li>

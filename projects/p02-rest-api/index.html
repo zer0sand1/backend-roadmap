@@ -18,14 +18,14 @@
 
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 1 &mdash; Foundations</div>
+    <div class="phase">Phase 1 - Foundations</div>
     <h1>RESTful Library Management API</h1>
-    <div class="subtitle">Your first real framework — FastAPI with in-memory storage</div>
+    <div class="subtitle">Your first real framework - FastAPI with in-memory storage</div>
     <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>Pydantic</span><span>Uvicorn</span></div>
   </div>
 
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Build a library management API (books, authors, members) using FastAPI. Temporarily store data in-memory (a Python dict). Focus on clean RESTful design, request validation with Pydantic, and automatic OpenAPI documentation. You'll feel the power of a framework after building from scratch in P01. Learn resource naming conventions, proper use of HTTP methods and status codes, dependency injection, and error handling patterns.</p>
     <pre>
 +--------+   HTTP   +-----------+   Pydantic    +-------------+
@@ -38,8 +38,8 @@
     </pre>
   </div>
 
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>CRUD for books: GET /books, POST /books, GET /books/{id}, PUT /books/{id}, DELETE /books/{id}</li>
       <li>CRUD for authors with book relationships</li>
@@ -52,8 +52,8 @@
     </ul>
   </div>
 
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>REST architectural constraints: stateless, uniform interface, resource-based (read Fielding's dissertation chapter 5)</li>
       <li>Resource naming best practices: plural nouns, nested resources, versioning (/v1/books)</li>
@@ -64,8 +64,8 @@
     </ul>
   </div>
 
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>FastAPI project structure (routers, models, schemas, dependencies)</li>
       <li>Pydantic for request/response validation and serialization</li>
@@ -76,8 +76,8 @@
     </ul>
   </div>
 
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Set up FastAPI project with main.py, routers/, schemas/, models/</li>
       <li>Define Pydantic schemas for Book, Author, Member (request/response variants)</li>
@@ -92,8 +92,8 @@
     </ol>
   </div>
 
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>GET /books returns all books; POST /books creates one with validation</li>
       <li>PUT /books/{id} updates and returns the updated book</li>

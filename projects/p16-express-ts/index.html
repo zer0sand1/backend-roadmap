@@ -16,14 +16,14 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 7 — TypeScript & Modern APIs</div>
+    <div class="phase">Phase 7 - TypeScript & Modern APIs</div>
     <h1>TypeScript + Express REST API with Prisma</h1>
-    <div class="subtitle">Full TypeScript backend — Express, Prisma ORM, Zod validation, patterns</div>
+    <div class="subtitle">Full TypeScript backend - Express, Prisma ORM, Zod validation, patterns</div>
     <div class="tech-badges"><span>TypeScript</span><span>Node.js</span><span>Express</span><span>Prisma</span><span>Zod</span><span>PostgreSQL</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
-    <p>Build a Task Manager API entirely in TypeScript. Use Express with proper middleware architecture. Use Prisma ORM for database access (type-safe queries). Use Zod for request validation (compile-time + runtime). This is your first TypeScript backend project — learn the ecosystem, tooling, and patterns that modern startups use. After this, you can work in both Python and TypeScript backends.</p>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
+    <p>Build a Task Manager API entirely in TypeScript. Use Express with proper middleware architecture. Use Prisma ORM for database access (type-safe queries). Use Zod for request validation (compile-time + runtime). This is your first TypeScript backend project - learn the ecosystem, tooling, and patterns that modern startups use. After this, you can work in both Python and TypeScript backends.</p>
     <pre>
 src/
   index.ts                  # Entry point
@@ -47,8 +47,8 @@ prisma/
   schema.prisma             # Database schema
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>User registration and login with JWT (bcrypt for password hashing)</li>
       <li>Task CRUD: title, description, status (todo, in_progress, done), priority, due_date</li>
@@ -62,8 +62,8 @@ prisma/
       <li>TypeScript strict mode enabled</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>TypeScript fundamentals: types, interfaces, generics, enums (read TypeScript Handbook)</li>
       <li>Express middleware pattern: app.use, error middleware, request pipeline</li>
@@ -73,8 +73,8 @@ prisma/
       <li>REST API best practices with Express: route-Controller-Service-Repository layers</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>TypeScript project setup (tsconfig, ts-node, nodemon)</li>
       <li>Express application structure with layered architecture</li>
@@ -85,8 +85,8 @@ prisma/
       <li>Layered architecture: routes -> controllers -> services -> repositories</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Initialize TypeScript project (npm init, tsconfig.json, dependencies)</li>
       <li>Set up Prisma with PostgreSQL schema (User, Task models)</li>
@@ -101,8 +101,8 @@ prisma/
       <li>Write tests with vitest/supertest</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>POST /api/auth/register creates user; POST /api/auth/login returns JWT</li>
       <li>GET /api/tasks returns only authenticated user's tasks</li>

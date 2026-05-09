@@ -16,14 +16,14 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 8 — Production</div>
+    <div class="phase">Phase 8 - Production</div>
     <h1>Docker, CI/CD &amp; Cloud Deployment</h1>
     <div class="subtitle">Containerization, orchestration, pipelines, live deployment to cloud</div>
     <div class="tech-badges"><span>Docker</span><span>Docker Compose</span><span>GitHub Actions</span><span>Nginx</span><span>Render/Fly.io</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
-    <p>Containerize all services (FastAPI, Celery, Redis, PostgreSQL, RabbitMQ, Express/TypeScript server) with Docker. Orchestrate with docker-compose. Add Nginx reverse proxy. Set up GitHub Actions CI/CD pipeline that runs lint/tests and builds/pushes images. Deploy the entire stack to Render or Fly.io with a real URL. This is the productionization layer — turning your projects into real, accessible services.</p>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
+    <p>Containerize all services (FastAPI, Celery, Redis, PostgreSQL, RabbitMQ, Express/TypeScript server) with Docker. Orchestrate with docker-compose. Add Nginx reverse proxy. Set up GitHub Actions CI/CD pipeline that runs lint/tests and builds/pushes images. Deploy the entire stack to Render or Fly.io with a real URL. This is the productionization layer - turning your projects into real, accessible services.</p>
     <pre>
                     +--------+
                     | Nginx  |  port 80
@@ -47,8 +47,8 @@
             +--------+
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Multi-stage Dockerfiles for Python (FastAPI) and Node (Express/GraphQL)</li>
       <li>Docker Compose with all services: app, worker, postgres, redis, rabbitmq, nginx</li>
@@ -62,20 +62,20 @@
       <li>Zero-downtime deploys (multiple replicas)</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Dockerfile best practices: multi-stage builds, layer caching, .dockerignore (read Docker docs)</li>
       <li>Docker Compose: services, volumes, networks, depends_on, healthcheck</li>
       <li>Docker networking: bridge network, port mapping, container DNS</li>
       <li>Nginx configuration: upstream, location blocks, reverse proxy, rate limiting</li>
       <li>CI/CD pipeline design: lint, test, build, push, deploy (read GitHub Actions docs)</li>
-      <li>Cloud platforms: Render vs Fly.io vs Railway vs AWS — trade-offs</li>
+      <li>Cloud platforms: Render vs Fly.io vs Railway vs AWS - trade-offs</li>
       <li>Environment-based configuration: 12-factor app principles</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>Writing optimized Dockerfiles for Python (slim images) and Node (alpine)</li>
       <li>Docker Compose with health checks, restart policies, resource limits</li>
@@ -86,8 +86,8 @@
       <li>Environment variable management across dev/staging/prod</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Write Dockerfile for FastAPI app (multi-stage: builder, runner)</li>
       <li>Write Dockerfile for TypeScript/Node app</li>
@@ -101,8 +101,8 @@
       <li>Add production URL to README</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>docker-compose up --build starts all 8+ services; docker-compose ps shows them healthy</li>
       <li>Nginx serves the API at /api and GraphQL at /graphql</li>

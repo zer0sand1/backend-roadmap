@@ -16,13 +16,13 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 7 — TypeScript & Modern APIs</div>
+    <div class="phase">Phase 7 - TypeScript & Modern APIs</div>
     <h1>GraphQL API Wrapper</h1>
     <div class="subtitle">Schema design, resolvers, DataLoader, subscriptions, code-first schema</div>
     <div class="tech-badges"><span>TypeScript</span><span>GraphQL</span><span>Apollo Server</span><span>TypeGraphQL</span><span>DataLoader</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Build a GraphQL API that wraps the URL shortener REST API (or uses the Prisma database directly). Implement a GraphQL schema with queries, mutations, and subscriptions (realtime events). Use DataLoader to solve the N+1 problem. Compare performance with the REST version. This project gives you the third API paradigm (after REST and gRPC) and teaches you schema-first API design.</p>
     <pre>
 GraphQL Client (Apollo)
@@ -40,12 +40,12 @@ Query  Mutation  Subscription
  Prisma / Database
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Queries: urls, url(id), users, user(id), searchUrls(query, limit, offset)</li>
       <li>Mutations: createUrl, updateUrl, deleteUrl, createUser, login</li>
-      <li>Subscriptions: urlClicked(urlId) — real-time notification when URL is accessed</li>
+      <li>Subscriptions: urlClicked(urlId) - real-time notification when URL is accessed</li>
       <li>Code-first schema with TypeGraphQL (decorator-based)</li>
       <li>DataLoader for batching DB queries (solve N+1)</li>
       <li>Input types for mutations with validation</li>
@@ -54,8 +54,8 @@ Query  Mutation  Subscription
       <li>Field-level authorization (admin-only fields)</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>GraphQL type system: Schema, Query, Mutation, Subscription, ObjectType, InputType</li>
       <li>Resolvers: how resolver chain works, root, args, context, info</li>
@@ -66,8 +66,8 @@ Query  Mutation  Subscription
       <li>Apollo Server 4 + TypeGraphQL integration</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>TypeGraphQL decorators: @ObjectType, @Arg, @Query, @Mutation, @Subscription</li>
       <li>DataLoader implementation: batch function, per-request caching</li>
@@ -78,8 +78,8 @@ Query  Mutation  Subscription
       <li>Apollo Studio / GraphiQL for interactive querying</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Set up Apollo Server with TypeScript + TypeGraphQL</li>
       <li>Define GraphQL object types (Url, User, Click) with decorators</li>
@@ -93,8 +93,8 @@ Query  Mutation  Subscription
       <li>Benchmark: same query in GraphQL vs REST, compare response size and time</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>GraphiQL at /graphql shows schema documentation</li>
       <li>Query `urls { id longUrl clicks { timestamp } }` returns nested data without N+1 (check console/sql log for 1 query not N+1)</li>

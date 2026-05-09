@@ -16,13 +16,13 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 4 — Reliability & Correctness</div>
+    <div class="phase">Phase 4 - Reliability & Correctness</div>
     <h1>Testing Deep-Dive</h1>
     <div class="subtitle">pytest, fixtures, mocking, integration tests, testcontainers</div>
     <div class="tech-badges"><span>Python</span><span>pytest</span><span>pytest-asyncio</span><span>Testcontainers</span><span>factory_boy</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Write comprehensive tests for the URL shortener and order service. Unit tests, integration tests with a real test database, API tests with TestClient, mocking external services. Use pytest fixtures for clean test setup, factory_boy for test data generation, and Testcontainers for spinning up PostgreSQL in tests. This project is what separates professional engineers from hobbyists.</p>
     <pre>
 tests/
@@ -40,8 +40,8 @@ tests/
   factories.py            # Factory boy models
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Unit tests for all Pydantic schemas (validation, edge cases)</li>
       <li>Unit tests for business logic (URL shortening algorithm, auth helpers)</li>
@@ -54,8 +54,8 @@ tests/
       <li>Test for concurrent access patterns (P08 style)</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>pytest architecture: fixtures, conftest.py, markers, parametrize</li>
       <li>Mocking: pytest-mock, unittest.mock, when to mock vs not</li>
@@ -66,8 +66,8 @@ tests/
       <li>Test-driven development: red-green-refactor cycle</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>Writing clean pytest fixtures with proper scope (function, module, session)</li>
       <li>FastAPI TestClient for async API testing</li>
@@ -79,8 +79,8 @@ tests/
       <li>Coverage configuration and reporting</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Set up pytest config (pyproject.toml or pytest.ini) with asyncio mode</li>
       <li>Create test factories with factory_boy for all models</li>
@@ -94,8 +94,8 @@ tests/
       <li>Document test patterns for future projects</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>pytest runs all tests and they pass</li>
       <li>Tests use a real PostgreSQL database (via Testcontainers or test DB)</li>

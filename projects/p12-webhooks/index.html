@@ -16,13 +16,13 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 5 — Events & Communication</div>
+    <div class="phase">Phase 5 - Events & Communication</div>
     <h1>Webhook Delivery System</h1>
     <div class="subtitle">Event-driven architecture, reliable delivery, signatures, retry</div>
     <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>RabbitMQ</span><span>Redis</span><span>TypeScript</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Build a webhook system on top of the URL shortener. When a URL is accessed, fire a webhook to the registered callback URL. Implement reliable delivery with retry + backoff, payload signing (HMAC-SHA256), idempotency via event IDs, and a webhook dashboard for managing subscriptions. This is how modern APIs notify external systems of events.</p>
     <pre>
 URL Shortener                    Webhook System                  External
@@ -47,8 +47,8 @@ Event Bus (RabbitMQ) -----&gt; Webhook Dispatcher Worker
                            Webhook attempts log
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>POST /webhooks/register creates webhook subscription (url, events[], secret)</li>
       <li>GET /webhooks lists subscriptions with status</li>
@@ -63,8 +63,8 @@ Event Bus (RabbitMQ) -----&gt; Webhook Dispatcher Worker
       <li>Secret rotation endpoint</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Webhook pattern: server-to-server HTTP callbacks (read Stripe webhook docs)</li>
       <li>HMAC signatures: how they verify payload integrity and authenticity</li>
@@ -75,8 +75,8 @@ Event Bus (RabbitMQ) -----&gt; Webhook Dispatcher Worker
       <li>Svix/Clerk webhook design patterns (industry standard)</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>Event emission on resource changes (Observer pattern)</li>
       <li>Webhook delivery worker with async HTTP (httpx.AsyncClient)</li>
@@ -86,8 +86,8 @@ Event Bus (RabbitMQ) -----&gt; Webhook Dispatcher Worker
       <li>Delivery attempt logging and analytics</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Add WebhookSubscription model (url, events, secret, is_active)</li>
       <li>Add WebhookAttempt model (subscription_id, event_id, status, response, duration)</li>
@@ -102,8 +102,8 @@ Event Bus (RabbitMQ) -----&gt; Webhook Dispatcher Worker
       <li>Create a simple webhook receiver (TypeScript/Express server) for testing</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>Creating a URL emits url.created event; subscriber receives webhook</li>
       <li>Webhook payload includes X-Webhook-Signature header; receiver can verify it</li>

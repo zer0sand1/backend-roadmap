@@ -16,13 +16,13 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 5 — Events & Communication</div>
+    <div class="phase">Phase 5 - Events & Communication</div>
     <h1>Background Job Worker with RabbitMQ</h1>
     <div class="subtitle">Message queues, worker pools, retries, dead letter queues</div>
     <div class="tech-badges"><span>Python</span><span>RabbitMQ</span><span>Pika</span><span>Docker</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Build a standalone job worker system. Producers publish jobs (send email, generate report) to RabbitMQ exchanges/queues. Workers consume, process, and ack/nack messages. Implement retry with exponential backoff, dead letter queues for failed jobs, and a job dashboard API. This is the backbone of reliable async processing.</p>
     <pre>
 Producer API (FastAPI)                    Worker (Python)
@@ -37,23 +37,23 @@ Dead Letter Exchange    Retry Queue (with TTL)
 DLQ (manual inspect)    Re-queued after backoff
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>POST /jobs enqueues a new job (type: email, report, cleanup; params: {...})</li>
       <li>GET /jobs returns all jobs with status (queued, running, completed, failed)</li>
       <li>GET /jobs/{id} returns job details and result</li>
       <li>RabbitMQ setup: direct exchange per job type, competing consumers</li>
       <li>Manual acknowledgment (basic_ack on success, basic_nack on failure)</li>
-      <li>Retry with exponential backoff (1s, 4s, 16s, 64s — max 4 retries)</li>
+      <li>Retry with exponential backoff (1s, 4s, 16s, 64s - max 4 retries)</li>
       <li>Dead letter queue for jobs that exhaust retries</li>
       <li>Idempotent job processing (dedup by job_id)</li>
       <li>Graceful worker shutdown (prefetch, finish in-flight, then stop)</li>
       <li>Job timeout (kill if running &gt; 5 minutes)</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Message queue concepts: producer, consumer, queue, binding, exchange (read RabbitMQ tutorials)</li>
       <li>RabbitMQ exchange types: direct, topic, fanout, headers</li>
@@ -64,8 +64,8 @@ DLQ (manual inspect)    Re-queued after backoff
       <li>Prefetch count and consumer fairness</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>RabbitMQ setup with Docker (rabbitmq:3-management image)</li>
       <li>Pika library for AMQP in Python</li>
@@ -76,8 +76,8 @@ DLQ (manual inspect)    Re-queued after backoff
       <li>Job status tracking in PostgreSQL</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Start RabbitMQ with Docker</li>
       <li>Set up Pika connection with connection recovery</li>
@@ -91,8 +91,8 @@ DLQ (manual inspect)    Re-queued after backoff
       <li>Run multiple workers and test competing consumers</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>Job published to RabbitMQ survives worker restart (persistent messages)</li>
       <li>Failed job retries 4 times with exponential backoff, then moves to DLQ</li>

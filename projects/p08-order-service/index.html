@@ -16,14 +16,14 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 4 — Reliability & Correctness</div>
+    <div class="phase">Phase 4 - Reliability & Correctness</div>
     <h1>E-commerce Order Service</h1>
     <div class="subtitle">Transactions, inventory contention, idempotency, saga pattern</div>
     <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>SQLAlchemy</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
-    <p>Build an order management system with products, inventory, carts, and orders. The core challenge: handle concurrent purchases correctly. Implement optimistic and pessimistic locking. Use database transactions for atomicity. Add idempotency keys to prevent double charges. This project teaches you the hardest part of backend engineering — getting concurrent data modifications right.</p>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
+    <p>Build an order management system with products, inventory, carts, and orders. The core challenge: handle concurrent purchases correctly. Implement optimistic and pessimistic locking. Use database transactions for atomicity. Add idempotency keys to prevent double charges. This project teaches you the hardest part of backend engineering - getting concurrent data modifications right.</p>
     <pre>
 POST /orders {items, idempotency_key}
          |
@@ -41,8 +41,8 @@ POST /orders {items, idempotency_key}
     If any step fails -&gt; ROLLBACK (or compensating transaction)
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Products with name, price, stock_quantity, version (for optimistic locking)</li>
       <li>Cart: add/remove items, view cart</li>
@@ -56,8 +56,8 @@ POST /orders {items, idempotency_key}
       <li>Admin endpoint to view all orders with filtering</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>ACID properties: Atomicity, Consistency, Isolation, Durability (read "Designing Data-Intensive Applications" Ch 5)</li>
       <li>Transaction isolation levels: READ COMMITTED, REPEATABLE READ, SERIALIZABLE</li>
@@ -67,8 +67,8 @@ POST /orders {items, idempotency_key}
       <li>Deadlock detection and prevention strategies</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>SQLAlchemy session management and transaction boundaries</li>
       <li>SELECT ... FOR UPDATE for pessimistic row-level locking</li>
@@ -78,8 +78,8 @@ POST /orders {items, idempotency_key}
       <li>Concurrent test writing (verify 2 users buying last item)</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Define models: Product (with version column), Cart, CartItem, Order, OrderItem</li>
       <li>Seed products with initial stock</li>
@@ -93,10 +93,10 @@ POST /orders {items, idempotency_key}
       <li>Write concurrent test (using asyncio.gather or threading)</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
-      <li>Two concurrent requests buying the last item — one succeeds (200), one gets 409 Conflict</li>
+      <li>Two concurrent requests buying the last item - one succeeds (200), one gets 409 Conflict</li>
       <li>Same idempotency key returns same result without creating duplicate order</li>
       <li>Inventory count is always accurate after concurrent purchases (verify in DB)</li>
       <li>Order creation is atomic: if payment fails, inventory goes back to original state</li>

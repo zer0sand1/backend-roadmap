@@ -16,14 +16,14 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 6 — Performance & Visibility</div>
+    <div class="phase">Phase 6 - Performance & Visibility</div>
     <h1>Observability Stack</h1>
     <div class="subtitle">Structured logging, metrics, traces, dashboards, alerting</div>
     <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>Prometheus</span><span>Grafana</span><span>OpenTelemetry</span><span>ELK</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
-    <p>Add structured logging, Prometheus metrics, and OpenTelemetry tracing to your URL shortener. Ship logs to Elasticsearch and visualize in Kibana. Create a Grafana dashboard showing request rate, error rate, latency (p50/p95/p99), and cache hit ratio. Instrument a distributed trace across the webhook delivery flow. This makes your system observable — you can answer any question about what's happening.</p>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
+    <p>Add structured logging, Prometheus metrics, and OpenTelemetry tracing to your URL shortener. Ship logs to Elasticsearch and visualize in Kibana. Create a Grafana dashboard showing request rate, error rate, latency (p50/p95/p99), and cache hit ratio. Instrument a distributed trace across the webhook delivery flow. This makes your system observable - you can answer any question about what's happening.</p>
     <pre>
 +------------+     /metrics      +-------------+
 |  FastAPI   |  -------------->  | Prometheus  |
@@ -47,8 +47,8 @@
                                      +----------+
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Structured logging with request_id, service, endpoint, duration, user_id, status_code</li>
       <li>Prometheus metrics: /metrics endpoint with request counter, latency histogram, in-flight gauge</li>
@@ -61,10 +61,10 @@
       <li>Kibana dashboard for log search with structured fields</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
-      <li>Three pillars of observability: logs, metrics, traces — what each solves (read "Observability: A Manifesto")</li>
+      <li>Three pillars of observability: logs, metrics, traces - what each solves (read "Observability: A Manifesto")</li>
       <li>Structured logging vs unstructured: JSON format, log levels, correlation IDs</li>
       <li>Prometheus metric types: Counter (rate), Gauge (value), Histogram (distribution), Summary</li>
       <li>OpenTelemetry: traces, spans, span context, propagation (read OTel docs)</li>
@@ -73,8 +73,8 @@
       <li>ELK stack: Elasticsearch for storage, Kibana for visualization</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>JSON structured logging with structlog library</li>
       <li>Prometheus client instrumentation (prometheus_client) in FastAPI</li>
@@ -85,8 +85,8 @@
       <li>Shipping logs to Elasticsearch via HTTP API</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Add structlog for JSON structured logging</li>
       <li>Add request_id middleware (generate UUID per request, log it)</li>
@@ -101,8 +101,8 @@
       <li>Ship logs to Elasticsearch, create Kibana dashboard</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>/metrics endpoint returns Prometheus-formatted metrics</li>
       <li>Logs contain request_id, duration_ms, status_code, service_name in JSON</li>

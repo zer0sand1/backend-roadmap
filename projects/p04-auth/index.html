@@ -18,15 +18,15 @@
 
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 2 &mdash; Access & Control</div>
+    <div class="phase">Phase 2 - Access & Control</div>
     <h1>Authentication & Authorization</h1>
     <div class="subtitle">Add users, JWT tokens, OAuth2, and RBAC to the URL shortener</div>
     <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>JWT</span><span>bcrypt</span><span>OAuth2</span></div>
   </div>
 
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
-    <p>Add user registration and login to the URL shortener. Implement JWT access + refresh tokens. Add role-based access control (admin vs regular user). Learn password hashing (bcrypt), token storage best practices, middleware for authentication, and OAuth2 flows. Users own their short URLs — only they can edit/delete them. Admins can manage all users. This is the security foundation every real API needs.</p>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
+    <p>Add user registration and login to the URL shortener. Implement JWT access + refresh tokens. Add role-based access control (admin vs regular user). Learn password hashing (bcrypt), token storage best practices, middleware for authentication, and OAuth2 flows. Users own their short URLs - only they can edit/delete them. Admins can manage all users. This is the security foundation every real API needs.</p>
     <pre>
 +--------+  POST /register    +----------+   bcrypt    +----------+
 | Client |  POST /login       | FastAPI  |  hashing    | Postgres |
@@ -43,8 +43,8 @@
     </pre>
   </div>
 
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>POST /register creates user with email + password (hashed with bcrypt)</li>
       <li>POST /login validates credentials, returns access_token + refresh_token</li>
@@ -58,8 +58,8 @@
     </ul>
   </div>
 
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Password hashing: bcrypt vs argon2, salt, work factor (read "How to Safely Store a Password")</li>
       <li>JWT structure: header (alg), payload (claims), signature (HMAC or RSA)</li>
@@ -70,8 +70,8 @@
     </ul>
   </div>
 
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>User registration flow with hashed password storage</li>
       <li>JWT creation (python-jose / PyJWT), verification, and refresh logic</li>
@@ -82,8 +82,8 @@
     </ul>
   </div>
 
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Add User model (id, email, hashed_password, role, is_active, created_at)</li>
       <li>Implement password hashing with bcrypt (passlib)</li>
@@ -92,14 +92,14 @@
       <li>Build auth middleware (Depends(get_current_user)) that validates Bearer token</li>
       <li>Add refresh token endpoint with rotation</li>
       <li>Associate URLs with users (add user_id foreign key)</li>
-      <li>Implement RBAC — admin role with user management endpoints</li>
+      <li>Implement RBAC - admin role with user management endpoints</li>
       <li>Add login rate limiting with Redis</li>
       <li>Test auth flow: register -> login -> access protected routes -> refresh</li>
     </ol>
   </div>
 
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>POST /register creates user; POST /login returns access_token and refresh_token</li>
       <li>Accessing /me without token returns 401</li>

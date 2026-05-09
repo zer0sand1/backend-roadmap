@@ -18,14 +18,14 @@
 
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 1 &mdash; Foundations</div>
+    <div class="phase">Phase 1 - Foundations</div>
     <h1>Custom HTTP Server from Scratch</h1>
     <div class="subtitle">Understand the protocol before using the framework</div>
     <div class="tech-badges"><span>Python</span><span>socket</span><span>HTTP/1.1</span><span>TCP</span></div>
   </div>
 
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
     <p>Build a bare-bones HTTP/1.1 server using only Python's socket library. No frameworks, no web libraries. Your server should parse raw HTTP requests, route them to handlers, and return proper responses. This is the foundation everything else sits on. You'll understand exactly what happens when a browser sends a request. Implement threading to handle concurrent connections. Add support for serving static files. This project removes all magic from web development.</p>
     <pre>
 +---------+     TCP Connection      +------------------+
@@ -43,8 +43,8 @@
     </pre>
   </div>
 
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Bind to a port and accept TCP connections</li>
       <li>Parse the raw HTTP request line (method, path, version)</li>
@@ -58,8 +58,8 @@
     </ul>
   </div>
 
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>TCP/IP fundamentals: 3-way handshake, ports, sockets (read "Beej's Guide to Network Programming")</li>
       <li>HTTP/1.1 message format: request line, headers, empty line, body (read RFC 7230 sections 2-4)</li>
@@ -70,8 +70,8 @@
     </ul>
   </div>
 
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>Socket programming and the TCP server lifecycle (bind-listen-accept loop)</li>
       <li>Parsing raw byte streams into structured HTTP messages</li>
@@ -82,8 +82,8 @@
     </ul>
   </div>
 
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Set up a TCP server socket, bind to localhost:8080, listen for connections</li>
       <li>Accept connections in a loop, receive data, print raw bytes to understand the format</li>
@@ -98,8 +98,8 @@
     </ol>
   </div>
 
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>curl -v http://localhost:8080/ returns a complete HTTP response with status line, headers, body</li>
       <li>Server handles GET /, POST /data, and returns 404 for unknown routes</li>

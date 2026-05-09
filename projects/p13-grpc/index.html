@@ -16,14 +16,14 @@
 </nav>
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 5 — Events & Communication</div>
+    <div class="phase">Phase 5 - Events & Communication</div>
     <h1>gRPC Microservice</h1>
     <div class="subtitle">Protocol Buffers, inter-service RPC, streaming, service discovery</div>
     <div class="tech-badges"><span>Python</span><span>gRPC</span><span>Protocol Buffers</span><span>protoc</span></div>
   </div>
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
-    <p>Build a gRPC-based user service that the URL shortener and other services can call. Define .proto files with services and messages. Implement both unary RPCs and server-side streaming. Learn how gRPC compares to REST — type safety, HTTP/2 multiplexing, binary encoding, and code generation. This is how modern microservices talk to each other internally.</p>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
+    <p>Build a gRPC-based user service that the URL shortener and other services can call. Define .proto files with services and messages. Implement both unary RPCs and server-side streaming. Learn how gRPC compares to REST - type safety, HTTP/2 multiplexing, binary encoding, and code generation. This is how modern microservices talk to each other internally.</p>
     <pre>
 +----------------+    gRPC (HTTP/2)    +----------------+
 | URL Shortener   |   protobuf binary   |  User Service  |
@@ -38,22 +38,22 @@
                                           +-----------+
     </pre>
   </div>
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>Define UserService proto with: GetUser, CreateUser, UpdateUser, ListUsers, StreamActiveUsers</li>
-      <li>Unary RPCs: GetUser, CreateUser, UpdateUser — request/response pattern</li>
-      <li>Server-side streaming: StreamActiveUsers — client receives a stream of active users</li>
-      <li>Client-side streaming: BatchCreateUsers — client sends a stream of users, server responds once</li>
-      <li>Bidirectional streaming: ChatWithSupport — both sides stream messages</li>
+      <li>Unary RPCs: GetUser, CreateUser, UpdateUser - request/response pattern</li>
+      <li>Server-side streaming: StreamActiveUsers - client receives a stream of active users</li>
+      <li>Client-side streaming: BatchCreateUsers - client sends a stream of users, server responds once</li>
+      <li>Bidirectional streaming: ChatWithSupport - both sides stream messages</li>
       <li>Inter-service auth: each gRPC call includes a service API key in metadata</li>
       <li>Error handling: proper gRPC status codes (NOT_FOUND, ALREADY_EXISTS, INVALID_ARGUMENT)</li>
       <li>Health check: gRPC health checking protocol</li>
       <li>Reflection: gRPC reflection for debugging with grpcurl</li>
     </ul>
   </div>
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>Protocol Buffers: message definition, field types, field numbers, package (read protobuf docs)</li>
       <li>gRPC concepts: service definition, RPC types, stubs, server implementations (read gRPC docs)</li>
@@ -63,8 +63,8 @@
       <li>gRPC error handling: status codes, error details, interceptor pattern</li>
     </ul>
   </div>
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>Writing .proto files with services and messages</li>
       <li>Generating Python code from .proto with protoc/grpc_tools</li>
@@ -75,8 +75,8 @@
       <li>Running gRPC services alongside FastAPI (different port)</li>
     </ul>
   </div>
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Define user.proto with UserService and messages</li>
       <li>Generate Python code with grpcio-tools (python -m grpc_tools.protoc ...)</li>
@@ -90,8 +90,8 @@
       <li>Test with grpcurl and write client tests</li>
     </ol>
   </div>
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>gRPC server starts on port 50051 and responds to GetUser requests</li>
       <li>grpcurl list shows all defined services and methods</li>

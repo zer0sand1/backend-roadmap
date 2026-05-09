@@ -18,15 +18,15 @@
 
 <div class="container">
   <div class="page-header">
-    <div class="phase">Phase 3 &mdash; Real-time & Async</div>
+    <div class="phase">Phase 3 - Real-time & Async</div>
     <h1>Real-time Chat with WebSockets</h1>
-    <div class="subtitle">Full-duplex communication — rooms, pub/sub, connection management</div>
+    <div class="subtitle">Full-duplex communication - rooms, pub/sub, connection management</div>
     <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>WebSocket</span><span>Redis Pub/Sub</span><span>HTML/JS</span></div>
   </div>
 
-  <div class="card card-arch">
-    <h2><span class="icon">&#128736;</span> Project Overview</h2>
-    <p>Build a real-time multi-room chat application. Users connect via WebSocket, join rooms, send messages. Use Redis Pub/Sub to broadcast across multiple server instances. Manage connection lifecycle (connect, disconnect, reconnect). Build a minimal HTML/JS client to test it. This project teaches you bidirectional communication — the foundation for notifications, live updates, and collaborative features.</p>
+  <div class="block block-arch">
+    <div class="block-header"><span class="icon">&#128736;</span><h2>Project Overview</h2></div>
+    <p>Build a real-time multi-room chat application. Users connect via WebSocket, join rooms, send messages. Use Redis Pub/Sub to broadcast across multiple server instances. Manage connection lifecycle (connect, disconnect, reconnect). Build a minimal HTML/JS client to test it. This project teaches you bidirectional communication - the foundation for notifications, live updates, and collaborative features.</p>
     <pre>
 +----------+  WebSocket      +----------+  Redis Pub/Sub  +----------+
 | Browser  |  &lt;-----------&gt;  | FastAPI  |  &lt;-----------&gt;  | Server 2 |
@@ -40,8 +40,8 @@
     </pre>
   </div>
 
-  <div class="card card-spec">
-    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+  <div class="block block-spec">
+    <div class="block-header"><span class="icon">&#128196;</span><h2>Project Specification</h2></div>
     <ul>
       <li>WebSocket endpoint at ws://localhost:8000/ws/{room_id}?token={jwt}</li>
       <li>Users join a room on connect, leave on disconnect</li>
@@ -55,8 +55,8 @@
     </ul>
   </div>
 
-  <div class="card card-read">
-    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+  <div class="block block-read">
+    <div class="block-header"><span class="icon">&#128214;</span><h2>What to Read Before Starting</h2></div>
     <ul>
       <li>WebSocket protocol: upgrade handshake, frames, opcodes (read RFC 6455)</li>
       <li>WebSocket vs SSE vs long polling: trade-offs</li>
@@ -67,8 +67,8 @@
     </ul>
   </div>
 
-  <div class="card card-learn">
-    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+  <div class="block block-learn">
+    <div class="block-header"><span class="icon">&#128640;</span><h2>What You'll Learn</h2></div>
     <ul>
       <li>WebSocket endpoint in FastAPI with authentication</li>
       <li>Managing connected clients (dict of room -> set of WebSocket connections)</li>
@@ -79,8 +79,8 @@
     </ul>
   </div>
 
-  <div class="card card-step">
-    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+  <div class="block block-step">
+    <div class="block-header"><span class="icon">&#128295;</span><h2>Implementation Steps</h2></div>
     <ol>
       <li>Add WebSocket endpoint in FastAPI with JWT auth on connect</li>
       <li>Build ConnectionManager class that tracks room -> connections mapping</li>
@@ -95,8 +95,8 @@
     </ol>
   </div>
 
-  <div class="card card-verify">
-    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+  <div class="block block-verify">
+    <div class="block-header"><span class="icon">&#10003;</span><h2>Verification Goals</h2></div>
     <ul>
       <li>Two browser tabs in the same room show messages in real-time (&lt;500ms delay)</li>
       <li>Messages in Room A don't appear in Room B</li>
