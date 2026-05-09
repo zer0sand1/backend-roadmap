@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P06 - Real-time Chat with WebSockets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 3 &mdash; Real-time & Async</div>
+    <h1>Real-time Chat with WebSockets</h1>
+    <div class="subtitle">Full-duplex communication — rooms, pub/sub, connection management</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>WebSocket</span><span>Redis Pub/Sub</span><span>HTML/JS</span></div>
+  </div>
+
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a real-time multi-room chat application. Users connect via WebSocket, join rooms, send messages. Use Redis Pub/Sub to broadcast across multiple server instances. Manage connection lifecycle (connect, disconnect, reconnect). Build a minimal HTML/JS client to test it. This project teaches you bidirectional communication — the foundation for notifications, live updates, and collaborative features.</p>
+    <pre>
++----------+  WebSocket      +----------+  Redis Pub/Sub  +----------+
+| Browser  |  &lt;-----------&gt;  | FastAPI  |  &lt;-----------&gt;  | Server 2 |
+| Client 1 |   ws://server   | Instance |  channel:chat   | Instance |
++----------+                 |    1     |                 +----------+
+                             |          |                 +----------+
++----------+                 |  Room    |                 | Server 3 |
+| Browser  |  WebSocket      | Manager  |                 | Instance |
+| Client 2 |  &lt;-----------&gt;  |          |                 +----------+
++----------+                 +----------+
+    </pre>
+  </div>
+
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>WebSocket endpoint at ws://localhost:8000/ws/{room_id}?token={jwt}</li>
+      <li>Users join a room on connect, leave on disconnect</li>
+      <li>Messages broadcast to all users in the same room</li>
+      <li>System messages (user joined, user left) for each room</li>
+      <li>Message format: {"type": "message|join|leave", "user": "...", "text": "...", "timestamp": "..."}</li>
+      <li>Multiple rooms isolated from each other</li>
+      <li>Redis Pub/Sub keeps rooms in sync across server instances</li>
+      <li>Heartbeat/ping-pong every 30 seconds to detect dead connections</li>
+      <li>Message history (last 50 messages per room in Redis)</li>
+    </ul>
+  </div>
+
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>WebSocket protocol: upgrade handshake, frames, opcodes (read RFC 6455)</li>
+      <li>WebSocket vs SSE vs long polling: trade-offs</li>
+      <li>Pub/sub pattern: publishers, subscribers, channels, message brokering</li>
+      <li>Connection lifecycle: OPEN, CLOSING, CLOSED; on_connect, on_disconnect</li>
+      <li>Scaling WebSockets: why sticky sessions aren't enough, need external pub/sub</li>
+      <li>FastAPI WebSocket: accept, receive_text, send_text, close, disconnect handling</li>
+    </ul>
+  </div>
+
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>WebSocket endpoint in FastAPI with authentication</li>
+      <li>Managing connected clients (dict of room -> set of WebSocket connections)</li>
+      <li>Redis Pub/Sub to broadcast across multiple server instances</li>
+      <li>Heartbeat/ping-pong to detect and clean up dead connections</li>
+      <li>Graceful shutdown: drain connections on server stop</li>
+      <li>Building a minimal browser-based chat client with vanilla JS</li>
+    </ul>
+  </div>
+
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Add WebSocket endpoint in FastAPI with JWT auth on connect</li>
+      <li>Build ConnectionManager class that tracks room -> connections mapping</li>
+      <li>Handle connect (add to room, broadcast join message)</li>
+      <li>Handle disconnect (remove from room, broadcast leave message)</li>
+      <li>Handle incoming messages (broadcast to all room members)</li>
+      <li>Add Redis Pub/Sub for cross-instance message broadcasting</li>
+      <li>Add heartbeat check (ping client, remove if no pong in 60s)</li>
+      <li>Store last 50 messages per room in Redis list</li>
+      <li>Build HTML/JS client with room list and message input</li>
+      <li>Test with 2 browser tabs + 2 server instances</li>
+    </ol>
+  </div>
+
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>Two browser tabs in the same room show messages in real-time (&lt;500ms delay)</li>
+      <li>Messages in Room A don't appear in Room B</li>
+      <li>Disconnecting a client shows "user left" message to other clients</li>
+      <li>Running 2 server instances, messages sync across both (via Redis)</li>
+      <li>Server handles 50+ concurrent WebSocket connections without slowdown</li>
+      <li>Reconnecting client receives last 50 messages from history</li>
+      <li>Closing browser tab cleans up within 60 seconds (heartbeat detect)</li>
+    </ul>
+  </div>
+
+  <nav class="project-nav">
+    <a href="../p05-rate-limiter/" class="prev"><span class="label">&larr; Previous</span><span class="title">Rate Limiter & API Gateway Middleware</span></a>
+    <a href="../p07-file-upload/" class="next"><span class="label">Next &rarr;</span><span class="title">File Upload Service with CDN</span></a>
+  </nav>
+</div>
+</body>
+</html>

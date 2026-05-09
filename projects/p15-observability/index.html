@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P15 - Observability Stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 6 — Performance & Visibility</div>
+    <h1>Observability Stack</h1>
+    <div class="subtitle">Structured logging, metrics, traces, dashboards, alerting</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>Prometheus</span><span>Grafana</span><span>OpenTelemetry</span><span>ELK</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Add structured logging, Prometheus metrics, and OpenTelemetry tracing to your URL shortener. Ship logs to Elasticsearch and visualize in Kibana. Create a Grafana dashboard showing request rate, error rate, latency (p50/p95/p99), and cache hit ratio. Instrument a distributed trace across the webhook delivery flow. This makes your system observable — you can answer any question about what's happening.</p>
+    <pre>
++------------+     /metrics      +-------------+
+|  FastAPI   |  -------------->  | Prometheus  |
+|  App       |                   +-------------+
+|            |                        |
+| + structlog|-- JSON logs -->  +-------------+
+| + OTel SDK|-- traces ----->  |  Jaeger     |
++------------+                  +-------------+
+                                or Zipkin
++----------+                    +-------------+
+| Grafana  |  <--- queries ---  | Prometheus  |
+| Dashboard|                   +-------------+
++----------+
+
++------------+   Filebeat/Logstash   +-------------+
+| JSON logs  |  ------------------>  | Elasticsearch|
++------------+                       +-------------+
+                                          |
+                                     +----------+
+                                     |  Kibana  |
+                                     +----------+
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>Structured logging with request_id, service, endpoint, duration, user_id, status_code</li>
+      <li>Prometheus metrics: /metrics endpoint with request counter, latency histogram, in-flight gauge</li>
+      <li>RED metrics: Rate (requests/sec), Errors (error rate), Duration (latency distribution)</li>
+      <li>OpenTelemetry tracing: auto-instrument FastAPI, manual spans for critical paths</li>
+      <li>Trace context propagation across services (REST calls carry trace_id in headers)</li>
+      <li>Grafana dashboard: request rate panel, p50/p95/p99 latency, error rate, cache hit ratio</li>
+      <li>Alert rules: error rate &gt; 5% for 5 minutes, p99 &gt; 500ms</li>
+      <li>JSON logs shipped to Elasticsearch (Filebeat or direct HTTP)</li>
+      <li>Kibana dashboard for log search with structured fields</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Three pillars of observability: logs, metrics, traces — what each solves (read "Observability: A Manifesto")</li>
+      <li>Structured logging vs unstructured: JSON format, log levels, correlation IDs</li>
+      <li>Prometheus metric types: Counter (rate), Gauge (value), Histogram (distribution), Summary</li>
+      <li>OpenTelemetry: traces, spans, span context, propagation (read OTel docs)</li>
+      <li>RED method: Rate, Errors, Duration for service monitoring</li>
+      <li>Grafana: data sources, panels, dashboards, alerting rules</li>
+      <li>ELK stack: Elasticsearch for storage, Kibana for visualization</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>JSON structured logging with structlog library</li>
+      <li>Prometheus client instrumentation (prometheus_client) in FastAPI</li>
+      <li>Histogram buckets for latency measurement</li>
+      <li>OpenTelemetry auto-instrumentation + custom spans</li>
+      <li>Trace context propagation across HTTP calls (W3C traceparent header)</li>
+      <li>Grafana dashboard creation with PromQL queries</li>
+      <li>Shipping logs to Elasticsearch via HTTP API</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Add structlog for JSON structured logging</li>
+      <li>Add request_id middleware (generate UUID per request, log it)</li>
+      <li>Add Prometheus metrics middleware (request count, latency histogram)</li>
+      <li>Expose /metrics endpoint with prometheus_client</li>
+      <li>Set up OpenTelemetry with FastAPI auto-instrumentation</li>
+      <li>Add manual spans for critical operations (DB queries, external calls)</li>
+      <li>Propagate trace context across services (HTTP headers)</li>
+      <li>Set up Prometheus to scrape /metrics (prometheus.yml)</li>
+      <li>Set up Grafana, connect Prometheus data source, build dashboard</li>
+      <li>Set up Jaeger/Zipkin for trace visualization</li>
+      <li>Ship logs to Elasticsearch, create Kibana dashboard</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>/metrics endpoint returns Prometheus-formatted metrics</li>
+      <li>Logs contain request_id, duration_ms, status_code, service_name in JSON</li>
+      <li>Grafana dashboard shows live request rate, error rate, p95 latency</li>
+      <li>Single HTTP request creates a trace visible in Jaeger with all spans</li>
+      <li>Dashboard alert fires when error rate exceeds threshold</li>
+      <li>Kibana dashboard shows structured log fields (not just raw text)</li>
+      <li>p99 latency panel shows accurate distribution from histogram data</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p14-caching/" class="prev"><span class="label">&larr; Previous</span><span class="title">Caching Layer &amp; CDN Simulator</span></a>
+    <a href="../p16-express-ts/" class="next"><span class="label">Next &rarr;</span><span class="title">TypeScript + Express REST API with Prisma</span></a>
+  </nav>
+</div>
+</body>
+</html>

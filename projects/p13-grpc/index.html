@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P13 - gRPC Microservice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 5 — Events & Communication</div>
+    <h1>gRPC Microservice</h1>
+    <div class="subtitle">Protocol Buffers, inter-service RPC, streaming, service discovery</div>
+    <div class="tech-badges"><span>Python</span><span>gRPC</span><span>Protocol Buffers</span><span>protoc</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a gRPC-based user service that the URL shortener and other services can call. Define .proto files with services and messages. Implement both unary RPCs and server-side streaming. Learn how gRPC compares to REST — type safety, HTTP/2 multiplexing, binary encoding, and code generation. This is how modern microservices talk to each other internally.</p>
+    <pre>
++----------------+    gRPC (HTTP/2)    +----------------+
+| URL Shortener   |   protobuf binary   |  User Service  |
+| (gRPC client)   |  ---------------->  |  (gRPC server) |
++----------------+                     |                |
+  GetUser(ids)       <----------------  |  port 50051    |
+  CreateUser(data)                       +----------------+
+  StreamActiveUsers()                           |
+                                                |
+                                          +-----+-----+
+                                          | PostgreSQL |
+                                          +-----------+
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>Define UserService proto with: GetUser, CreateUser, UpdateUser, ListUsers, StreamActiveUsers</li>
+      <li>Unary RPCs: GetUser, CreateUser, UpdateUser — request/response pattern</li>
+      <li>Server-side streaming: StreamActiveUsers — client receives a stream of active users</li>
+      <li>Client-side streaming: BatchCreateUsers — client sends a stream of users, server responds once</li>
+      <li>Bidirectional streaming: ChatWithSupport — both sides stream messages</li>
+      <li>Inter-service auth: each gRPC call includes a service API key in metadata</li>
+      <li>Error handling: proper gRPC status codes (NOT_FOUND, ALREADY_EXISTS, INVALID_ARGUMENT)</li>
+      <li>Health check: gRPC health checking protocol</li>
+      <li>Reflection: gRPC reflection for debugging with grpcurl</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Protocol Buffers: message definition, field types, field numbers, package (read protobuf docs)</li>
+      <li>gRPC concepts: service definition, RPC types, stubs, server implementations (read gRPC docs)</li>
+      <li>HTTP/2 multiplexing: how gRPC reuses a single TCP connection for multiple streams</li>
+      <li>Binary encoding vs JSON: size and speed comparison</li>
+      <li>gRPC vs REST vs GraphQL: when to use each</li>
+      <li>gRPC error handling: status codes, error details, interceptor pattern</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>Writing .proto files with services and messages</li>
+      <li>Generating Python code from .proto with protoc/grpc_tools</li>
+      <li>Implementing gRPC server with Python (grpcio)</li>
+      <li>Implementing gRPC client with generated stubs</li>
+      <li>Server-side, client-side, and bidirectional streaming</li>
+      <li>gRPC interceptors for logging, auth, and error handling</li>
+      <li>Running gRPC services alongside FastAPI (different port)</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Define user.proto with UserService and messages</li>
+      <li>Generate Python code with grpcio-tools (python -m grpc_tools.protoc ...)</li>
+      <li>Implement gRPC server with UserService servicer</li>
+      <li>Add SQLAlchemy integration to store users</li>
+      <li>Implement all unary RPCs (GetUser, CreateUser, etc.)</li>
+      <li>Add server-side streaming (StreamActiveUsers)</li>
+      <li>Add client-side streaming (BatchCreateUsers)</li>
+      <li>Add gRPC interceptor for authentication (check API key in metadata)</li>
+      <li>Create FastAPI endpoint that calls gRPC service internally</li>
+      <li>Test with grpcurl and write client tests</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>gRPC server starts on port 50051 and responds to GetUser requests</li>
+      <li>grpcurl list shows all defined services and methods</li>
+      <li>Server-side streaming sends active user updates every 5 seconds</li>
+      <li>Client-side streaming creates 100 users in a single RPC</li>
+      <li>gRPC call with invalid API key returns PermissionDenied error</li>
+      <li>FastAPI endpoint can call gRPC service and return results as JSON</li>
+      <li>Response size is significantly smaller than equivalent JSON (measure with protobuf vs json)</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p12-webhooks/" class="prev"><span class="label">&larr; Previous</span><span class="title">Webhook Delivery System</span></a>
+    <a href="../p14-caching/" class="next"><span class="label">Next &rarr;</span><span class="title">Caching Layer &amp; CDN Simulator</span></a>
+  </nav>
+</div>
+</body>
+</html>

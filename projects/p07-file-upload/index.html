@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P07 - File Upload Service with Async Processing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 3 — Real-time & Async</div>
+    <h1>File Upload Service with Async Processing</h1>
+    <div class="subtitle">Multipart uploads, image processing, task queues, CDN simulation</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>Celery</span><span>Redis</span><span>Pillow</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a service that accepts file uploads, validates them (type, size), processes them asynchronously (generate thumbnails), and stores them with a content-addressable scheme. Use Celery + Redis for background tasks. Simulate a CDN by serving files from a separate port/domain. This project teaches async task queues, file handling patterns, caching, and separation of concerns.</p>
+    <pre>
+Client --> POST /upload --> FastAPI --> Celery Producer --> Redis Broker
+                                   |                         |
+                                   v                         v
+                              File saved              Celery Worker
+                              to disk/                    |
+                              S3-like              resize_image()
+                              storage              generate_thumbnails()
+                                                         |
+                                                   CDN Server
+                                                   (separate port)
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>POST /upload accepts multipart file with validation (max 50MB, allowed types: jpg/png/pdf)</li>
+      <li>POST /upload returns task_id immediately (async processing)</li>
+      <li>GET /task/{task_id} returns status (pending, processing, completed, failed)</li>
+      <li>Image uploads auto-generate 3 thumbnail sizes (150x150, 300x300, 800x800)</li>
+      <li>Files stored as content_hash.ext (dedup by SHA-256)</li>
+      <li>CDN server on port 8001 serves processed files</li>
+      <li>GET /cdn/{filename} returns cached file with Cache-Control headers</li>
+      <li>File type detection by magic bytes (not extension)</li>
+      <li>Virus scanning placeholder (simulated check in worker)</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Multipart/form-data encoding and streaming file uploads</li>
+      <li>Celery architecture: broker (Redis/RabbitMQ), worker, result backend</li>
+      <li>Content-addressable storage: content hash as unique identifier, deduplication</li>
+      <li>Image processing: Pillow for resize, thumbnail, format conversion</li>
+      <li>CDN concepts: origin server, edge cache, cache headers (Cache-Control, ETag)</li>
+      <li>Task queue vs message queue: differences and use cases</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>FastAPI UploadFile and streaming file handling (avoid loading into memory)</li>
+      <li>Celery task definition, configuration, and worker execution</li>
+      <li>Image processing pipeline with Pillow (resize, thumbnail, quality)</li>
+      <li>Content-addressable file storage with SHA-256 hashing</li>
+      <li>CDN simulation: separate server, caching headers, origin pull</li>
+      <li>Task status tracking with Celery result backend</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Install Celery + Redis, configure Celery app in FastAPI</li>
+      <li>Create FileUpload endpoint with size/type validation</li>
+      <li>Define Celery task for processing (validate_image -&gt; generate_thumbnails -&gt; store)</li>
+      <li>Implement content-addressable storage (hash file, store as hex.ext)</li>
+      <li>Create thumbnail sizes using Pillow</li>
+      <li>Build task status endpoint (GET /task/{task_id})</li>
+      <li>Create CDN server on port 8001 (separate FastAPI app or static file server)</li>
+      <li>Add Cache-Control headers to CDN responses</li>
+      <li>Handle cleanup of failed uploads (stale files)</li>
+      <li>Test with curl -F "file=@photo.jpg" and verify thumbnails</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>Upload a 10MB file — it returns immediately and processes in background</li>
+      <li>Three thumbnail sizes exist after processing completes</li>
+      <li>Uploading the same file twice stores only one copy (dedup by hash)</li>
+      <li>Celery worker runs as a separate process (celery -A tasks worker --loglevel=info)</li>
+      <li>GET /cdn/thumb-150x150-{hash}.jpg returns the resized image</li>
+      <li>CDN response includes Cache-Control: public, max-age=3600 header</li>
+      <li>Invalid file type (e.g. .exe) returns 400 before any processing</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p06-websocket-chat/" class="prev"><span class="label">&larr; Previous</span><span class="title">WebSocket Chat</span></a>
+    <a href="../p08-order-service/" class="next"><span class="label">Next &rarr;</span><span class="title">E-commerce Order Service</span></a>
+  </nav>
+</div>
+</body>
+</html>

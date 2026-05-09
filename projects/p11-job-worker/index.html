@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P11 - Background Job Worker with RabbitMQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 5 — Events & Communication</div>
+    <h1>Background Job Worker with RabbitMQ</h1>
+    <div class="subtitle">Message queues, worker pools, retries, dead letter queues</div>
+    <div class="tech-badges"><span>Python</span><span>RabbitMQ</span><span>Pika</span><span>Docker</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a standalone job worker system. Producers publish jobs (send email, generate report) to RabbitMQ exchanges/queues. Workers consume, process, and ack/nack messages. Implement retry with exponential backoff, dead letter queues for failed jobs, and a job dashboard API. This is the backbone of reliable async processing.</p>
+    <pre>
+Producer API (FastAPI)                    Worker (Python)
+    |                                         |
+    v                                         v
+RabbitMQ Exchange --&gt; Queue --&gt; Worker Pool (multiple processes)
+    |                    |
+    v                    v
+Dead Letter Exchange    Retry Queue (with TTL)
+    |                    |
+    v                    v
+DLQ (manual inspect)    Re-queued after backoff
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>POST /jobs enqueues a new job (type: email, report, cleanup; params: {...})</li>
+      <li>GET /jobs returns all jobs with status (queued, running, completed, failed)</li>
+      <li>GET /jobs/{id} returns job details and result</li>
+      <li>RabbitMQ setup: direct exchange per job type, competing consumers</li>
+      <li>Manual acknowledgment (basic_ack on success, basic_nack on failure)</li>
+      <li>Retry with exponential backoff (1s, 4s, 16s, 64s — max 4 retries)</li>
+      <li>Dead letter queue for jobs that exhaust retries</li>
+      <li>Idempotent job processing (dedup by job_id)</li>
+      <li>Graceful worker shutdown (prefetch, finish in-flight, then stop)</li>
+      <li>Job timeout (kill if running &gt; 5 minutes)</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Message queue concepts: producer, consumer, queue, binding, exchange (read RabbitMQ tutorials)</li>
+      <li>RabbitMQ exchange types: direct, topic, fanout, headers</li>
+      <li>AMQP protocol: channels, queues, bindings, basic_publish, basic_consume</li>
+      <li>Message acknowledgment: auto vs manual, basic_ack, basic_nack, basic_reject</li>
+      <li>Dead letter exchanges (DLX) and dead letter queues (DLQ)</li>
+      <li>Retry strategies: exponential backoff with jitter</li>
+      <li>Prefetch count and consumer fairness</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>RabbitMQ setup with Docker (rabbitmq:3-management image)</li>
+      <li>Pika library for AMQP in Python</li>
+      <li>Exchange and queue declaration with durable settings</li>
+      <li>Manual acknowledgment workflow (ack on success, nack + requeue on retryable)</li>
+      <li>Dead letter configuration (x-dead-letter-exchange, x-message-ttl for delays)</li>
+      <li>Graceful consumer shutdown (stop consuming, wait for tasks)</li>
+      <li>Job status tracking in PostgreSQL</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Start RabbitMQ with Docker</li>
+      <li>Set up Pika connection with connection recovery</li>
+      <li>Define exchanges (jobs) and queues (email_queue, report_queue)</li>
+      <li>Implement job producer (POST /jobs -&gt; publish to exchange)</li>
+      <li>Implement worker (consume -&gt; process -&gt; ack/nack)</li>
+      <li>Add retry logic with DLX + TTL for delayed retry</li>
+      <li>Add job timeout (message TTL + dead letter)</li>
+      <li>Add job status persistence (PostgreSQL)</li>
+      <li>Build job dashboard API (list jobs, retry failed)</li>
+      <li>Run multiple workers and test competing consumers</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>Job published to RabbitMQ survives worker restart (persistent messages)</li>
+      <li>Failed job retries 4 times with exponential backoff, then moves to DLQ</li>
+      <li>Multiple workers distribute jobs (competing consumers pattern)</li>
+      <li>GET /jobs shows correct status for each job</li>
+      <li>Manually nacking a message re-queues it for retry</li>
+      <li>DLQ contains jobs that exhausted retries (inspect via RabbitMQ Management UI)</li>
+      <li>Workers shut down gracefully (finish current job, don't lose queued jobs)</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p10-search-engine/" class="prev"><span class="label">&larr; Previous</span><span class="title">Full-Text Search Engine</span></a>
+    <a href="../p12-webhooks/" class="next"><span class="label">Next &rarr;</span><span class="title">Webhook Delivery System</span></a>
+  </nav>
+</div>
+</body>
+</html>

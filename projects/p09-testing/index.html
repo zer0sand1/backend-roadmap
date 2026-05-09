@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P09 - Testing Deep-Dive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 4 — Reliability & Correctness</div>
+    <h1>Testing Deep-Dive</h1>
+    <div class="subtitle">pytest, fixtures, mocking, integration tests, testcontainers</div>
+    <div class="tech-badges"><span>Python</span><span>pytest</span><span>pytest-asyncio</span><span>Testcontainers</span><span>factory_boy</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Write comprehensive tests for the URL shortener and order service. Unit tests, integration tests with a real test database, API tests with TestClient, mocking external services. Use pytest fixtures for clean test setup, factory_boy for test data generation, and Testcontainers for spinning up PostgreSQL in tests. This project is what separates professional engineers from hobbyists.</p>
+    <pre>
+tests/
+  unit/
+    test_models.py        # Test model validation
+    test_services.py      # Test business logic with mocks
+  integration/
+    test_database.py      # Test with real PostgreSQL (Testcontainers)
+    test_repositories.py  # Test DB queries
+  api/
+    test_urls.py          # Test API endpoints (FastAPI TestClient)
+    test_auth.py          # Test auth flow end-to-end
+    test_orders.py        # Test order concurrency
+  conftest.py             # Shared fixtures
+  factories.py            # Factory boy models
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>Unit tests for all Pydantic schemas (validation, edge cases)</li>
+      <li>Unit tests for business logic (URL shortening algorithm, auth helpers)</li>
+      <li>Integration tests for database models and queries</li>
+      <li>API tests for every endpoint (happy path + error cases)</li>
+      <li>Test database isolation (each test gets fresh tables)</li>
+      <li>Mock external services (payment gateway, email sender)</li>
+      <li>Factory boy for generating test data</li>
+      <li>Coverage report (aim for &gt;85%)</li>
+      <li>Test for concurrent access patterns (P08 style)</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>pytest architecture: fixtures, conftest.py, markers, parametrize</li>
+      <li>Mocking: pytest-mock, unittest.mock, when to mock vs not</li>
+      <li>Integration testing: why test with a real database</li>
+      <li>Testcontainers: programmatic Docker containers for testing</li>
+      <li>Factory boy: declarative test data generation</li>
+      <li>Coverage: pytest-cov, what to measure, what 100% coverage means</li>
+      <li>Test-driven development: red-green-refactor cycle</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>Writing clean pytest fixtures with proper scope (function, module, session)</li>
+      <li>FastAPI TestClient for async API testing</li>
+      <li>Testcontainers for PostgreSQL in tests (auto start/stop)</li>
+      <li>Factory boy for model factories with relationships</li>
+      <li>Mocking external HTTP calls with responses / httpx_mock</li>
+      <li>Parametrized tests for edge cases</li>
+      <li>Testing concurrent access (asyncio.gather with multiple requests)</li>
+      <li>Coverage configuration and reporting</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Set up pytest config (pyproject.toml or pytest.ini) with asyncio mode</li>
+      <li>Create test factories with factory_boy for all models</li>
+      <li>Write conftest.py with shared fixtures (test_client, test_db, auth_headers)</li>
+      <li>Unit test Pydantic schemas (test validation, custom validators)</li>
+      <li>Integration test database queries with Testcontainers</li>
+      <li>API test all endpoints (200, 201, 400, 401, 403, 404, 409, 422, 429)</li>
+      <li>Mock external services (payment gateway returning success/failure)</li>
+      <li>Write concurrent access test for order service</li>
+      <li>Add coverage measurement, set minimum threshold</li>
+      <li>Document test patterns for future projects</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>pytest runs all tests and they pass</li>
+      <li>Tests use a real PostgreSQL database (via Testcontainers or test DB)</li>
+      <li>Factory boy generates valid test data</li>
+      <li>Mocked payment service returns configurable success/failure</li>
+      <li>Concurrent order test proves race conditions are handled</li>
+      <li>Coverage report shows &gt;85% line coverage</li>
+      <li>Each test is independent (no shared state leaks between tests)</li>
+      <li>Running the full test suite takes &lt;30 seconds</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p08-order-service/" class="prev"><span class="label">&larr; Previous</span><span class="title">E-commerce Order Service</span></a>
+    <a href="../p10-search-engine/" class="next"><span class="label">Next &rarr;</span><span class="title">Full-Text Search Engine</span></a>
+  </nav>
+</div>
+</body>
+</html>

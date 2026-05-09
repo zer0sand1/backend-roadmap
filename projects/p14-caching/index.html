@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P14 - Caching Layer &amp; CDN Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 6 — Performance & Visibility</div>
+    <h1>Caching Layer &amp; CDN Simulator</h1>
+    <div class="subtitle">Cache strategies, invalidation, distributed caching, TTL, eviction</div>
+    <div class="tech-badges"><span>Python</span><span>Redis</span><span>FastAPI</span><span>LRU</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a caching layer for the URL shortener and file service. Implement multiple cache strategies: cache-aside, write-through, write-behind. Build an LRU cache from scratch. Add Redis-based distributed caching with TTL. Implement cache invalidation on data updates. Simulate a CDN edge cache with origin pull and stale-while-revalidate patterns.</p>
+    <pre>
++--------+    Request    +----------+    Cache Check    +----------+
+| Client |  ---------->  |  API     |  -------------->  |  Redis   |
++--------+               |  + LRU   |  <--------------  | (dist.)  |
+                         |  Cache   |   hit? return     +----------+
+                         +----------+                        |
+                              | miss                    +----------+
+                              v                         |  LRU     |
+                         +----------+                   | (local)  |
+                         | Database |                   +----------+
+                         +----------+
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>LRU cache implementation from scratch (doubly linked list + hashmap)</li>
+      <li>Cache-aside pattern: read from cache first, on miss read DB + populate cache</li>
+      <li>Write-through: write to DB + cache atomically on updates</li>
+      <li>Write-behind: write to cache, async flush to DB</li>
+      <li>Redis-based distributed cache with JSON serialization</li>
+      <li>TTL support per cache entry (configurable per endpoint)</li>
+      <li>Cache invalidation on data mutation (webhook-based or event-driven)</li>
+      <li>Thundering herd prevention (mutex-based: only first request hits DB)</li>
+      <li>Stale-while-revalidate: serve stale data, refresh in background</li>
+      <li>Cache statistics: hit rate, miss rate, eviction count, average latency</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Cache strategies: cache-aside, read-through, write-through, write-behind (read "AWS Caching Patterns" or "Database Caching with Redis")</li>
+      <li>Cache invalidation: TTL, event-driven, write-invalidate, write-update</li>
+      <li>LRU vs LFU vs FIFO eviction policies</li>
+      <li>Thundering herd problem: what happens when cache expires and 1000 requests hit DB</li>
+      <li>Stale-while-revalidate pattern (Cloudflare CDN approach)</li>
+      <li>Redis data structures for caching: SET with TTL, Hash for partial updates</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>Implementing LRU cache with O(1) operations (doubly linked list + hashmap)</li>
+      <li>Redis SET/GET with TTL for distributed caching</li>
+      <li>Serialization/deserialization (JSON or pickle) for cached data</li>
+      <li>Cache invalidation on data mutation (event-based hooks)</li>
+      <li>Thundering herd prevention with distributed locks (Redlock)</li>
+      <li>Stale-while-revalidate background refresh pattern</li>
+      <li>Measuring cache performance (hit ratio, latency improvement)</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Implement LRU cache class in Python (Node class, hashmap, doubly linked list)</li>
+      <li>Test LRU correctness (insert, access, eviction order)</li>
+      <li>Add Redis cache class with TTL support</li>
+      <li>Add cache-aside decorator/middleware for FastAPI endpoints</li>
+      <li>Add write-through invalidation (update DB -> invalidate cache)</li>
+      <li>Add thundering herd prevention (distributed lock on cache miss)</li>
+      <li>Implement stale-while-revalidate pattern</li>
+      <li>Add cache statistics endpoint (GET /cache/stats)</li>
+      <li>Integrate with URL shortener (cache redirect lookups)</li>
+      <li>Benchmark: cache hit vs miss latency</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>Cache hit serves response in &lt;5ms, cache miss + DB in &lt;50ms (measurable)</li>
+      <li>LRU eviction removes least recently used entry when full</li>
+      <li>Updating a URL immediately invalidates its cache entry</li>
+      <li>10 concurrent requests for a missing key — only 1 hits the database</li>
+      <li>TTL expiration automatically refreshes cache on next request</li>
+      <li>Stale-while-revalidate serves stale data within 60s TTL window</li>
+      <li>Cache hit ratio &gt; 80% on repeated URL accesses</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p13-grpc/" class="prev"><span class="label">&larr; Previous</span><span class="title">gRPC Microservice</span></a>
+    <a href="../p15-observability/" class="next"><span class="label">Next &rarr;</span><span class="title">Observability Stack</span></a>
+  </nav>
+</div>
+</body>
+</html>

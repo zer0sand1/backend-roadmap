@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P02 - RESTful Library Management API</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 1 &mdash; Foundations</div>
+    <h1>RESTful Library Management API</h1>
+    <div class="subtitle">Your first real framework — FastAPI with in-memory storage</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>Pydantic</span><span>Uvicorn</span></div>
+  </div>
+
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a library management API (books, authors, members) using FastAPI. Temporarily store data in-memory (a Python dict). Focus on clean RESTful design, request validation with Pydantic, and automatic OpenAPI documentation. You'll feel the power of a framework after building from scratch in P01. Learn resource naming conventions, proper use of HTTP methods and status codes, dependency injection, and error handling patterns.</p>
+    <pre>
++--------+   HTTP   +-----------+   Pydantic    +-------------+
+| Client | -------> |  FastAPI  |  validation   |  In-Memory  |
+| (curl) | <------- |  Routers  |  -----------> |  Storage    |
++--------+   JSON   +-----------+               |  (dict)     |
+                    |  /docs    |               +-------------+
+                    |  Swagger  |
+                    +-----------+
+    </pre>
+  </div>
+
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>CRUD for books: GET /books, POST /books, GET /books/{id}, PUT /books/{id}, DELETE /books/{id}</li>
+      <li>CRUD for authors with book relationships</li>
+      <li>CRUD for members with book checkout tracking</li>
+      <li>Request validation using Pydantic (required fields, types, string lengths)</li>
+      <li>Proper HTTP status codes (200, 201, 204, 400, 404, 422)</li>
+      <li>Search books by title/author via query parameters</li>
+      <li>Pagination support (limit/offset parameters)</li>
+      <li>Error handling with consistent error response format</li>
+    </ul>
+  </div>
+
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>REST architectural constraints: stateless, uniform interface, resource-based (read Fielding's dissertation chapter 5)</li>
+      <li>Resource naming best practices: plural nouns, nested resources, versioning (/v1/books)</li>
+      <li>HTTP methods and their idempotency guarantees</li>
+      <li>Pydantic models: Field types, validators, nested models</li>
+      <li>FastAPI dependency injection: how and why</li>
+      <li>OpenAPI / Swagger: auto-generated documentation</li>
+    </ul>
+  </div>
+
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>FastAPI project structure (routers, models, schemas, dependencies)</li>
+      <li>Pydantic for request/response validation and serialization</li>
+      <li>Path parameters, query parameters, and request body handling</li>
+      <li>HTTPException for structured error responses</li>
+      <li>Dependency injection for reusable logic (pagination, DB session)</li>
+      <li>Automatic OpenAPI docs generation at /docs</li>
+    </ul>
+  </div>
+
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Set up FastAPI project with main.py, routers/, schemas/, models/</li>
+      <li>Define Pydantic schemas for Book, Author, Member (request/response variants)</li>
+      <li>Create an in-memory "database" using dicts with auto-incrementing IDs</li>
+      <li>Implement book CRUD endpoints with proper status codes</li>
+      <li>Implement author CRUD endpoints with book relationship</li>
+      <li>Add search endpoint with query parameter filtering</li>
+      <li>Add pagination dependency for list endpoints</li>
+      <li>Implement member checkout/return book endpoints</li>
+      <li>Add error handling middleware for consistent error JSON</li>
+      <li>Test all endpoints via Swagger UI and curl</li>
+    </ol>
+  </div>
+
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>GET /books returns all books; POST /books creates one with validation</li>
+      <li>PUT /books/{id} updates and returns the updated book</li>
+      <li>Pydantic rejects invalid data (missing fields, wrong types) with 422 + clear error</li>
+      <li>/docs shows interactive Swagger UI with all endpoints documented</li>
+      <li>GET /books?author=Tolkien returns filtered results</li>
+      <li>GET /books?limit=5&offset=10 returns paginated results</li>
+    </ul>
+  </div>
+
+  <nav class="project-nav">
+    <a href="../p01-http-server/" class="prev"><span class="label">&larr; Previous</span><span class="title">Custom HTTP Server from Scratch</span></a>
+    <a href="../p03-url-shortener/" class="next"><span class="label">Next &rarr;</span><span class="title">URL Shortener with PostgreSQL</span></a>
+  </nav>
+</div>
+</body>
+</html>

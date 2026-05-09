@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P04 - Authentication & Authorization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 2 &mdash; Access & Control</div>
+    <h1>Authentication & Authorization</h1>
+    <div class="subtitle">Add users, JWT tokens, OAuth2, and RBAC to the URL shortener</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>JWT</span><span>bcrypt</span><span>OAuth2</span></div>
+  </div>
+
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Add user registration and login to the URL shortener. Implement JWT access + refresh tokens. Add role-based access control (admin vs regular user). Learn password hashing (bcrypt), token storage best practices, middleware for authentication, and OAuth2 flows. Users own their short URLs — only they can edit/delete them. Admins can manage all users. This is the security foundation every real API needs.</p>
+    <pre>
++--------+  POST /register    +----------+   bcrypt    +----------+
+| Client |  POST /login       | FastAPI  |  hashing    | Postgres |
+|        |  GET /me           | + Auth   |  + JWT      | + Redis  |
++--------+  POST /refresh     | Middleware|  signing    | (tokens) |
+     |                        +----------+             +----------+
+     | Authorization: Bearer &lt;jwt&gt;                          |
+     |        +--------------------------------+            |
+     +------&gt;|  auth_dependency() checks:     |            |
+              |  1. Is token valid?            |            |
+              |  2. Is user active?            |            |
+              |  3. Does role have permission? |            |
+              +--------------------------------+            |
+    </pre>
+  </div>
+
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>POST /register creates user with email + password (hashed with bcrypt)</li>
+      <li>POST /login validates credentials, returns access_token + refresh_token</li>
+      <li>Access tokens expire in 15 minutes, refresh tokens in 7 days</li>
+      <li>POST /refresh accepts refresh token, returns new access token</li>
+      <li>GET /me returns authenticated user's profile</li>
+      <li>POST /shorten creates URL owned by authenticated user</li>
+      <li>Only the owner can PUT/DELETE their URLs</li>
+      <li>Admin users can list all users and deactivate accounts</li>
+      <li>Rate limit login attempts (5 per minute per IP)</li>
+    </ul>
+  </div>
+
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Password hashing: bcrypt vs argon2, salt, work factor (read "How to Safely Store a Password")</li>
+      <li>JWT structure: header (alg), payload (claims), signature (HMAC or RSA)</li>
+      <li>Access tokens vs refresh tokens: why both are needed</li>
+      <li>OAuth2 flows: authorization code, implicit, client credentials (read RFC 6749)</li>
+      <li>Common web vulnerabilities: CSRF, XSS, SQL injection, timing attacks</li>
+      <li>FastAPI dependencies: how Depends() works for auth middleware</li>
+    </ul>
+  </div>
+
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>User registration flow with hashed password storage</li>
+      <li>JWT creation (python-jose / PyJWT), verification, and refresh logic</li>
+      <li>Password hashing with passlib + bcrypt</li>
+      <li>FastAPI dependency injection for reusable auth middleware</li>
+      <li>Role-based access control (RBAC) with enum roles</li>
+      <li>Refresh token rotation and revocation</li>
+    </ul>
+  </div>
+
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Add User model (id, email, hashed_password, role, is_active, created_at)</li>
+      <li>Implement password hashing with bcrypt (passlib)</li>
+      <li>Create POST /register endpoint with email validation</li>
+      <li>Create POST /login endpoint, generate JWT access + refresh tokens</li>
+      <li>Build auth middleware (Depends(get_current_user)) that validates Bearer token</li>
+      <li>Add refresh token endpoint with rotation</li>
+      <li>Associate URLs with users (add user_id foreign key)</li>
+      <li>Implement RBAC — admin role with user management endpoints</li>
+      <li>Add login rate limiting with Redis</li>
+      <li>Test auth flow: register -> login -> access protected routes -> refresh</li>
+    </ol>
+  </div>
+
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>POST /register creates user; POST /login returns access_token and refresh_token</li>
+      <li>Accessing /me without token returns 401</li>
+      <li>Request with expired token returns 401</li>
+      <li>POST /refresh with valid refresh token returns new access_token</li>
+      <li>User A cannot DELETE User B's URL (returns 403)</li>
+      <li>Admin can GET /admin/users and see all users</li>
+      <li>Passwords in DB are bcrypt hashes (never plaintext)</li>
+    </ul>
+  </div>
+
+  <nav class="project-nav">
+    <a href="../p03-url-shortener/" class="prev"><span class="label">&larr; Previous</span><span class="title">URL Shortener with PostgreSQL</span></a>
+    <a href="../p05-rate-limiter/" class="next"><span class="label">Next &rarr;</span><span class="title">Rate Limiter & API Gateway Middleware</span></a>
+  </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P16 - TypeScript + Express REST API with Prisma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 7 — TypeScript & Modern APIs</div>
+    <h1>TypeScript + Express REST API with Prisma</h1>
+    <div class="subtitle">Full TypeScript backend — Express, Prisma ORM, Zod validation, patterns</div>
+    <div class="tech-badges"><span>TypeScript</span><span>Node.js</span><span>Express</span><span>Prisma</span><span>Zod</span><span>PostgreSQL</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a Task Manager API entirely in TypeScript. Use Express with proper middleware architecture. Use Prisma ORM for database access (type-safe queries). Use Zod for request validation (compile-time + runtime). This is your first TypeScript backend project — learn the ecosystem, tooling, and patterns that modern startups use. After this, you can work in both Python and TypeScript backends.</p>
+    <pre>
+src/
+  index.ts                  # Entry point
+  app.ts                    # Express app setup
+  config/                   # Environment variables
+  middleware/               # Auth, logging, error handling
+  routes/                   # Route definitions
+    tasks.ts
+    users.ts
+  controllers/              # Request handlers
+    tasks.controller.ts
+  services/                 # Business logic
+    tasks.service.ts
+  repositories/             # Data access
+    tasks.repository.ts
+  schemas/                  # Zod validation schemas
+    tasks.schema.ts
+  types/                    # TypeScript types
+    task.ts
+prisma/
+  schema.prisma             # Database schema
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>User registration and login with JWT (bcrypt for password hashing)</li>
+      <li>Task CRUD: title, description, status (todo, in_progress, done), priority, due_date</li>
+      <li>Tasks scoped to users (users see only their own tasks)</li>
+      <li>Filtering, sorting, pagination on task list</li>
+      <li>Zod validation for all request bodies</li>
+      <li>Global error handling middleware</li>
+      <li>Request logging middleware</li>
+      <li>Environment-based configuration (dotenv)</li>
+      <li>Prisma schema with migrations</li>
+      <li>TypeScript strict mode enabled</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>TypeScript fundamentals: types, interfaces, generics, enums (read TypeScript Handbook)</li>
+      <li>Express middleware pattern: app.use, error middleware, request pipeline</li>
+      <li>Prisma ORM: schema definition, migrations, client generation, type-safe queries</li>
+      <li>Zod: schema validation, type inference (z.infer)</li>
+      <li>Node.js project structure: src/, dist/, tsconfig.json, package.json scripts</li>
+      <li>REST API best practices with Express: route-Controller-Service-Repository layers</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>TypeScript project setup (tsconfig, ts-node, nodemon)</li>
+      <li>Express application structure with layered architecture</li>
+      <li>Prisma schema design, migrations, and type-safe queries</li>
+      <li>Zod validation schemas with TypeScript type inference</li>
+      <li>JWT authentication middleware in TypeScript</li>
+      <li>Error handling patterns (custom error classes, error middleware)</li>
+      <li>Layered architecture: routes -> controllers -> services -> repositories</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Initialize TypeScript project (npm init, tsconfig.json, dependencies)</li>
+      <li>Set up Prisma with PostgreSQL schema (User, Task models)</li>
+      <li>Create Express app with middleware (cors, json, logger)</li>
+      <li>Implement auth routes: register, login, JWT generation</li>
+      <li>Build auth middleware (extract user from JWT)</li>
+      <li>Implement task CRUD routes with Zod validation</li>
+      <li>Add service layer with business logic</li>
+      <li>Add repository layer with Prisma queries</li>
+      <li>Add filtering, sorting, pagination with query params</li>
+      <li>Add global error handler middleware</li>
+      <li>Write tests with vitest/supertest</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>POST /api/auth/register creates user; POST /api/auth/login returns JWT</li>
+      <li>GET /api/tasks returns only authenticated user's tasks</li>
+      <li>Zod rejects invalid task data with proper error messages</li>
+      <li>Prisma query is fully type-safe (TypeScript catches column name typos at compile time)</li>
+      <li>Pagination: GET /api/tasks?page=2&amp;limit=10 returns correct slice</li>
+      <li>Error middleware catches unhandled errors and returns consistent JSON</li>
+      <li>ts-node-dev reloads on file changes during development</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p15-observability/" class="prev"><span class="label">&larr; Previous</span><span class="title">Observability Stack</span></a>
+    <a href="../p17-graphql/" class="next"><span class="label">Next &rarr;</span><span class="title">GraphQL API Wrapper</span></a>
+  </nav>
+</div>
+</body>
+</html>

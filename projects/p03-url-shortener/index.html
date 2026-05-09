@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P03 - URL Shortener with PostgreSQL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 1 &mdash; Foundations</div>
+    <h1>URL Shortener with PostgreSQL</h1>
+    <div class="subtitle">Persistence — first real database. SQLAlchemy, migrations, indexes</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>SQLAlchemy</span><span>Alembic</span></div>
+  </div>
+
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a URL shortener (like bit.ly). Store short_code to long_url mappings in PostgreSQL. Use SQLAlchemy as the ORM and Alembic for schema migrations. Learn connection pooling, database indexing, and the N+1 query problem. Add click tracking (count how many times each short URL is accessed). Implement Base62 encoding for short codes. This project teaches you everything about connecting a web app to a relational database.</p>
+    <pre>
++--------+  POST /shorten   +----------+  SQLAlchemy  +------------+
+| Client |  GET /{code}     | FastAPI  |  ----------> | PostgreSQL |
++--------+  (302 redirect)  +----------+  Alembic     +------------+
+                                  |                    |  urls      |
+                            +-----+-----+             |  clicks    |
+                            |  Redis     |             +------------+
+                            |  (optional |
+                            |   cache)   |
+                            +-----------+
+    </pre>
+  </div>
+
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>POST /shorten accepts {url: "..."} and returns {short_code: "...", short_url: "..."}</li>
+      <li>GET /{short_code} redirects to the original URL (302 for analytics, 301 for permanent)</li>
+      <li>GET /{short_code}/stats returns click count and last accessed time</li>
+      <li>Custom short codes (optional alias) via POST /shorten {url: "...", custom_code: "..."}</li>
+      <li>Base62 encoded short codes (a-z, A-Z, 0-9) for compact URLs</li>
+      <li>Track each click with timestamp, user agent, referrer</li>
+      <li>Database indexes on short_code for fast lookups</li>
+    </ul>
+  </div>
+
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Relational database concepts: tables, primary keys, foreign keys, indexes (read "Use the Index, Luke")</li>
+      <li>SQL CRUD: SELECT, INSERT, UPDATE, DELETE with WHERE clauses</li>
+      <li>SQLAlchemy Core vs ORM: when to use each</li>
+      <li>Alembic migrations: autogenerate, upgrade, downgrade</li>
+      <li>Base62 encoding algorithm</li>
+      <li>Connection pooling: why it matters, how SQLAlchemy manages it</li>
+      <li>301 vs 302 redirect: SEO and caching implications</li>
+    </ul>
+  </div>
+
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>SQLAlchemy model definitions with Column types, relationships, indexes</li>
+      <li>Writing and running Alembic migration scripts</li>
+      <li>Connection pooling configuration (pool_size, max_overflow)</li>
+      <li>Base62 encoding/decoding for short code generation</li>
+      <li>Redirect handling in FastAPI (RedirectResponse)</li>
+      <li>Click tracking with timestamp logging</li>
+    </ul>
+  </div>
+
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Install PostgreSQL, create database, configure SQLAlchemy connection string</li>
+      <li>Define URL model (id, long_url, short_code, created_at, click_count)</li>
+      <li>Set up Alembic, generate initial migration, apply it</li>
+      <li>Implement Base62 encoder/decoder</li>
+      <li>Create POST /shorten endpoint with URL validation (Pydantic HttpUrl)</li>
+      <li>Create GET /{short_code} with 302 redirect</li>
+      <li>Add click tracking model (id, url_id, timestamp, user_agent, referrer)</li>
+      <li>Add GET /{short_code}/stats endpoint</li>
+      <li>Add database index on short_code column</li>
+      <li>Test with curl and verify database entries</li>
+    </ol>
+  </div>
+
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>POST /shorten returns {"short_code": "ab3X9", "short_url": "http://localhost:8000/ab3X9"}</li>
+      <li>Visiting the short URL redirects to the original URL</li>
+      <li>Database persists across server restarts (data survives)</li>
+      <li>Alembic can upgrade and downgrade schema without data loss</li>
+      <li>EXPLAIN ANALYZE shows an index scan (not sequential scan) for code lookups</li>
+      <li>GET /stats shows click_count > 0 after visiting the URL</li>
+    </ul>
+  </div>
+
+  <nav class="project-nav">
+    <a href="../p02-rest-api/" class="prev"><span class="label">&larr; Previous</span><span class="title">RESTful Library Management API</span></a>
+    <a href="../p04-auth/" class="next"><span class="label">Next &rarr;</span><span class="title">Authentication & Authorization</span></a>
+  </nav>
+</div>
+</body>
+</html>

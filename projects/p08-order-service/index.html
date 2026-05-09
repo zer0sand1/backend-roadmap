@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P08 - E-commerce Order Service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 4 — Reliability & Correctness</div>
+    <h1>E-commerce Order Service</h1>
+    <div class="subtitle">Transactions, inventory contention, idempotency, saga pattern</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>SQLAlchemy</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build an order management system with products, inventory, carts, and orders. The core challenge: handle concurrent purchases correctly. Implement optimistic and pessimistic locking. Use database transactions for atomicity. Add idempotency keys to prevent double charges. This project teaches you the hardest part of backend engineering — getting concurrent data modifications right.</p>
+    <pre>
+POST /orders {items, idempotency_key}
+         |
+    FastAPI + SQLAlchemy
+         |
+    BEGIN TRANSACTION
+         |
+    1. Lock inventory rows (SELECT ... FOR UPDATE)
+    2. Check stock levels
+    3. Deduct quantities
+    4. Create order + order_items
+    5. Process payment (mock)
+    6. COMMIT
+         |
+    If any step fails -&gt; ROLLBACK (or compensating transaction)
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>Products with name, price, stock_quantity, version (for optimistic locking)</li>
+      <li>Cart: add/remove items, view cart</li>
+      <li>POST /orders creates order from cart (atomically)</li>
+      <li>Idempotency key header prevents duplicate orders</li>
+      <li>Two locking strategies: optimistic (version column) and pessimistic (SELECT FOR UPDATE)</li>
+      <li>GET /orders/{id} returns order status</li>
+      <li>GET /orders/{id}/status for polling</li>
+      <li>Checkout flow: validate stock -&gt; reserve inventory -&gt; create order -&gt; process payment -&gt; confirm</li>
+      <li>Failed payment triggers order cancellation + inventory restock (compensating transaction)</li>
+      <li>Admin endpoint to view all orders with filtering</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>ACID properties: Atomicity, Consistency, Isolation, Durability (read "Designing Data-Intensive Applications" Ch 5)</li>
+      <li>Transaction isolation levels: READ COMMITTED, REPEATABLE READ, SERIALIZABLE</li>
+      <li>Pessimistic locking (SELECT ... FOR UPDATE) vs optimistic locking (version column)</li>
+      <li>Idempotency keys: why payment processing requires them (read Stripe docs on idempotency)</li>
+      <li>Saga pattern: choreography vs orchestration for distributed transactions</li>
+      <li>Deadlock detection and prevention strategies</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>SQLAlchemy session management and transaction boundaries</li>
+      <li>SELECT ... FOR UPDATE for pessimistic row-level locking</li>
+      <li>Optimistic locking with version column and retry logic</li>
+      <li>Idempotency key creation, validation, and deduplication</li>
+      <li>Compensating transactions for partial failure recovery</li>
+      <li>Concurrent test writing (verify 2 users buying last item)</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Define models: Product (with version column), Cart, CartItem, Order, OrderItem</li>
+      <li>Seed products with initial stock</li>
+      <li>Build product listing and detail endpoints</li>
+      <li>Implement cart add/remove with stock validation</li>
+      <li>Implement POST /orders with idempotency key check</li>
+      <li>Add pessimistic locking (SELECT ... FOR UPDATE within transaction)</li>
+      <li>Add optimistic locking as alternative (catch StaleDataError, retry)</li>
+      <li>Mock payment processing step with failure simulation</li>
+      <li>Add compensating transaction for payment failure (restock inventory)</li>
+      <li>Write concurrent test (using asyncio.gather or threading)</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>Two concurrent requests buying the last item — one succeeds (200), one gets 409 Conflict</li>
+      <li>Same idempotency key returns same result without creating duplicate order</li>
+      <li>Inventory count is always accurate after concurrent purchases (verify in DB)</li>
+      <li>Order creation is atomic: if payment fails, inventory goes back to original state</li>
+      <li>Optimistic lock raises StaleDataError; retry succeeds on next attempt</li>
+      <li>Deadlock doesn't occur under moderate concurrency (test with 10 concurrent buys)</li>
+      <li>Order status transitions correctly: pending -&gt; confirmed -&gt; shipped</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p07-file-upload/" class="prev"><span class="label">&larr; Previous</span><span class="title">File Upload Service with Async Processing</span></a>
+    <a href="../p09-testing/" class="next"><span class="label">Next &rarr;</span><span class="title">Testing Deep-Dive</span></a>
+  </nav>
+</div>
+</body>
+</html>

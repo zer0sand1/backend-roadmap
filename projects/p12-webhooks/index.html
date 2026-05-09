@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12 - Webhook Delivery System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 5 — Events & Communication</div>
+    <h1>Webhook Delivery System</h1>
+    <div class="subtitle">Event-driven architecture, reliable delivery, signatures, retry</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>RabbitMQ</span><span>Redis</span><span>TypeScript</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a webhook system on top of the URL shortener. When a URL is accessed, fire a webhook to the registered callback URL. Implement reliable delivery with retry + backoff, payload signing (HMAC-SHA256), idempotency via event IDs, and a webhook dashboard for managing subscriptions. This is how modern APIs notify external systems of events.</p>
+    <pre>
+URL Shortener                    Webhook System                  External
+
+User visits {code}
+    |
+    v
+Event: url.clicked
+    |
+    v
+Event Bus (RabbitMQ) -----&gt; Webhook Dispatcher Worker
+                                |
+                           For each subscriber:
+                           1. Load subscription (url, secret)
+                           2. Sign payload with HMAC-SHA256
+                           3. POST to callback URL
+                           4. On success -&gt; mark delivered
+                           5. On failure -&gt; retry with backoff
+                           6. Max retries -&gt; mark failed
+                                |
+                           Event store (PostgreSQL)
+                           Webhook attempts log
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>POST /webhooks/register creates webhook subscription (url, events[], secret)</li>
+      <li>GET /webhooks lists subscriptions with status</li>
+      <li>PUT /webhooks/{id} updates subscription</li>
+      <li>DELETE /webhooks/{id} removes subscription</li>
+      <li>Events emitted on: url.created, url.accessed, url.deleted</li>
+      <li>Each webhook delivery attempt logged (status, response, duration)</li>
+      <li>HMAC-SHA256 signature in X-Webhook-Signature header</li>
+      <li>Retry: 5 attempts with exponential backoff (10s, 30s, 90s, 270s, 810s)</li>
+      <li>Event dedup by event_id (subscriber receives each event exactly once)</li>
+      <li>Webhook history: last 100 delivery attempts per subscription</li>
+      <li>Secret rotation endpoint</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Webhook pattern: server-to-server HTTP callbacks (read Stripe webhook docs)</li>
+      <li>HMAC signatures: how they verify payload integrity and authenticity</li>
+      <li>Idempotent delivery: why event_id prevents duplicate processing</li>
+      <li>Retry strategies: exponential backoff, jitter, circuit breaker</li>
+      <li>Event-driven architecture: event emission, event bus, event handlers</li>
+      <li>Webhook security: signature verification, secret rotation, IP allowlisting</li>
+      <li>Svix/Clerk webhook design patterns (industry standard)</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>Event emission on resource changes (Observer pattern)</li>
+      <li>Webhook delivery worker with async HTTP (httpx.AsyncClient)</li>
+      <li>HMAC-SHA256 payload signing and verification</li>
+      <li>Idempotent event processing (store processed event_ids)</li>
+      <li>Webhook secret generation and rotation</li>
+      <li>Delivery attempt logging and analytics</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Add WebhookSubscription model (url, events, secret, is_active)</li>
+      <li>Add WebhookAttempt model (subscription_id, event_id, status, response, duration)</li>
+      <li>Build webhook CRUD endpoints</li>
+      <li>Create EventBus class that emits events to RabbitMQ</li>
+      <li>Emit events on URL create/access/delete</li>
+      <li>Build WebhookDispatcher worker (consume events -&gt; deliver to subscribers)</li>
+      <li>Implement HMAC-SHA256 signing of webhook payloads</li>
+      <li>Implement retry with exponential backoff</li>
+      <li>Add idempotency (track event_ids per subscriber)</li>
+      <li>Build webhook delivery history API</li>
+      <li>Create a simple webhook receiver (TypeScript/Express server) for testing</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>Creating a URL emits url.created event; subscriber receives webhook</li>
+      <li>Webhook payload includes X-Webhook-Signature header; receiver can verify it</li>
+      <li>Failing receiver causes retry; after 5 failures, subscription is marked as failing</li>
+      <li>Same event delivered at most once per subscriber (idempotency)</li>
+      <li>GET /webhooks/{id}/attempts shows delivery history with status codes</li>
+      <li>Secret rotation invalidates old signatures, new calls use new secret</li>
+      <li>Receiver written in TypeScript can verify HMAC and process events</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p11-job-worker/" class="prev"><span class="label">&larr; Previous</span><span class="title">Background Job Worker with RabbitMQ</span></a>
+    <a href="../p13-grpc/" class="next"><span class="label">Next &rarr;</span><span class="title">gRPC Service</span></a>
+  </nav>
+</div>
+</body>
+</html>

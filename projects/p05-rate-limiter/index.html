@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P05 - Rate Limiter & API Gateway Middleware</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 2 &mdash; Access & Control</div>
+    <h1>Rate Limiter & API Gateway Middleware</h1>
+    <div class="subtitle">Protect your API with Redis-based rate limiting and middleware</div>
+    <div class="tech-badges"><span>Python</span><span>FastAPI</span><span>Redis</span><span>ASGI</span></div>
+  </div>
+
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Implement rate limiting on your URL shortener using Redis. Support both token bucket and sliding window algorithms. Build it as reusable ASGI middleware. Also add request logging, API key validation, and request transformation. These are the building blocks of an API gateway. Rate limiting is essential for production APIs — it prevents abuse, ensures fair usage, and protects backend resources.</p>
+    <pre>
++--------+     Request      +------------------+     +----------+
+| Client |  ------------->  |  ASGI Middleware  | --> | FastAPI  |
++--------+                  |                  |     +----------+
+                            |  1. Rate Check   |
+                            |  2. API Key Auth |     +----------+
+                            |  3. Request Log  |     |  Redis   |
+                            |  4. Transform    |     +----------+
+                            +------------------+     | Counters |
+                               |        ^            | Windows  |
+                               v        |            +----------+
+                           429 Too Many Requests
+    </pre>
+  </div>
+
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>Implement sliding window rate limiter using Redis sorted sets</li>
+      <li>Implement token bucket rate limiter for comparison</li>
+      <li>Configurable rate limits per endpoint, per user, per IP</li>
+      <li>Rate limit headers: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset</li>
+      <li>Retry-After header when rate limited</li>
+      <li>Request logging middleware (method, path, status, duration, user_id)</li>
+      <li>API key authentication for service-to-service calls</li>
+      <li>Graceful degradation: fail-open vs fail-closed strategies</li>
+    </ul>
+  </div>
+
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>Rate limiting algorithms: token bucket, sliding window, fixed window, leaky bucket (read "Rate Limiting Fundamentals" by Stripe)</li>
+      <li>Redis data types: STRING, SET, Sorted Set, Lua scripting for atomicity</li>
+      <li>ASGI specification: lifespan, scope, send/receive, middleware pattern</li>
+      <li>Rate limiting headers: IETF draft standard</li>
+      <li>Circuit breaker pattern and graceful degradation</li>
+      <li>Redis transactions: MULTI/EXEC vs Lua scripts for atomicity</li>
+    </ul>
+  </div>
+
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>Writing ASGI middleware using the call_next pattern</li>
+      <li>Redis sorted sets for sliding window counters (ZREMRANGEBYSCORE, ZCARD)</li>
+      <li>Token bucket algorithm implementation (refill rate, bucket capacity)</li>
+      <li>Lua scripting for atomic rate counter operations</li>
+      <li>Proper rate limit HTTP headers</li>
+      <li>Fail-open vs fail-closed: when to block vs when to allow</li>
+    </ul>
+  </div>
+
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Set up Redis connection pool in FastAPI</li>
+      <li>Implement SlidingWindowRateLimiter class using Redis sorted sets</li>
+      <li>Implement TokenBucketRateLimiter class for comparison</li>
+      <li>Build ASGI middleware that checks rate before passing to router</li>
+      <li>Add configurable limits: per-IP (100/min), per-user (1000/min), per-endpoint</li>
+      <li>Add rate limit headers to response</li>
+      <li>Implement API key authentication middleware</li>
+      <li>Add request logging middleware (JSON structured log)</li>
+      <li>Add graceful degradation (circuit breaker for Redis)</li>
+      <li>Benchmark both algorithms and compare performance</li>
+    </ol>
+  </div>
+
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>After N requests in T seconds, API returns 429 Too Many Requests with Retry-After</li>
+      <li>Rate limit resets after the window expires (wait and retry succeeds)</li>
+      <li>Different users have independent rate limits (User A blocked, User B allowed)</li>
+      <li>Rate limit headers present on every response</li>
+      <li>With Redis down, server continues in "fail-open" mode (or "fail-closed" configurable)</li>
+      <li>Lua script performs window check + increment in a single atomic operation</li>
+      <li>Sliding window and token bucket both work correctly — testable via /limiter-test endpoint</li>
+    </ul>
+  </div>
+
+  <nav class="project-nav">
+    <a href="../p04-auth/" class="prev"><span class="label">&larr; Previous</span><span class="title">Authentication & Authorization</span></a>
+    <a href="../p06-websocket-chat/" class="next"><span class="label">Next &rarr;</span><span class="title">Real-time Chat with WebSockets</span></a>
+  </nav>
+</div>
+</body>
+</html>

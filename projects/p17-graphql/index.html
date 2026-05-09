@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P17 - GraphQL API Wrapper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
+  <a href="../../index.html">Overview</a>
+  <a href="../../index.html#tech">Stack</a>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <div class="phase">Phase 7 — TypeScript & Modern APIs</div>
+    <h1>GraphQL API Wrapper</h1>
+    <div class="subtitle">Schema design, resolvers, DataLoader, subscriptions, code-first schema</div>
+    <div class="tech-badges"><span>TypeScript</span><span>GraphQL</span><span>Apollo Server</span><span>TypeGraphQL</span><span>DataLoader</span></div>
+  </div>
+  <div class="card card-arch">
+    <h2><span class="icon">&#128736;</span> Project Overview</h2>
+    <p>Build a GraphQL API that wraps the URL shortener REST API (or uses the Prisma database directly). Implement a GraphQL schema with queries, mutations, and subscriptions (realtime events). Use DataLoader to solve the N+1 problem. Compare performance with the REST version. This project gives you the third API paradigm (after REST and gRPC) and teaches you schema-first API design.</p>
+    <pre>
+GraphQL Client (Apollo)
+    |
+    | POST /graphql
+    v
+Apollo Server (TypeScript)
+    |
+    +------+------+-------+
+    |      |      |       |
+Query  Mutation  Subscription
+    |      |      |
+ Resolvers with DataLoader
+    |      |      |
+ Prisma / Database
+    </pre>
+  </div>
+  <div class="card card-spec">
+    <h2><span class="icon">&#128196;</span> Project Specification</h2>
+    <ul>
+      <li>Queries: urls, url(id), users, user(id), searchUrls(query, limit, offset)</li>
+      <li>Mutations: createUrl, updateUrl, deleteUrl, createUser, login</li>
+      <li>Subscriptions: urlClicked(urlId) — real-time notification when URL is accessed</li>
+      <li>Code-first schema with TypeGraphQL (decorator-based)</li>
+      <li>DataLoader for batching DB queries (solve N+1)</li>
+      <li>Input types for mutations with validation</li>
+      <li>Pagination with connection pattern (edges, nodes, pageInfo)</li>
+      <li>Authentication middleware (extract JWT, inject user into context)</li>
+      <li>Field-level authorization (admin-only fields)</li>
+    </ul>
+  </div>
+  <div class="card card-read">
+    <h2><span class="icon">&#128214;</span> What to Read Before Starting</h2>
+    <ul>
+      <li>GraphQL type system: Schema, Query, Mutation, Subscription, ObjectType, InputType</li>
+      <li>Resolvers: how resolver chain works, root, args, context, info</li>
+      <li>N+1 problem: why GraphQL makes it worse, DataLoader batching + caching</li>
+      <li>Code-first vs SDL-first approach</li>
+      <li>GraphQL subscriptions over WebSocket</li>
+      <li>GraphQL vs REST: flexibility vs overfetching, caching, versioning</li>
+      <li>Apollo Server 4 + TypeGraphQL integration</li>
+    </ul>
+  </div>
+  <div class="card card-learn">
+    <h2><span class="icon">&#128640;</span> What You'll Learn</h2>
+    <ul>
+      <li>TypeGraphQL decorators: @ObjectType, @Arg, @Query, @Mutation, @Subscription</li>
+      <li>DataLoader implementation: batch function, per-request caching</li>
+      <li>GraphQL context for auth user and shared state</li>
+      <li>Subscription resolver with pub/sub (in-memory or Redis)</li>
+      <li>Input types with validation decorators</li>
+      <li>Field resolvers for computed properties</li>
+      <li>Apollo Studio / GraphiQL for interactive querying</li>
+    </ul>
+  </div>
+  <div class="card card-step">
+    <h2><span class="icon">&#128295;</span> Implementation Steps</h2>
+    <ol>
+      <li>Set up Apollo Server with TypeScript + TypeGraphQL</li>
+      <li>Define GraphQL object types (Url, User, Click) with decorators</li>
+      <li>Implement Query resolvers (urls, url, users)</li>
+      <li>Implement Mutation resolvers (createUrl, login)</li>
+      <li>Add authentication middleware (JWT -> context.user)</li>
+      <li>Implement DataLoader for user -> urls batching</li>
+      <li>Add pagination with connection type</li>
+      <li>Implement Subscription resolver (urlClicked)</li>
+      <li>Add Redis pub/sub for cross-instance subscriptions</li>
+      <li>Benchmark: same query in GraphQL vs REST, compare response size and time</li>
+    </ol>
+  </div>
+  <div class="card card-verify">
+    <h2><span class="icon">&#10003;</span> Verification Goals</h2>
+    <ul>
+      <li>GraphiQL at /graphql shows schema documentation</li>
+      <li>Query `urls { id longUrl clicks { timestamp } }` returns nested data without N+1 (check console/sql log for 1 query not N+1)</li>
+      <li>createUrl mutation creates URL and returns it</li>
+      <li>urlClicked subscription fires when URL is visited (open GraphiQL in 2 tabs)</li>
+      <li>DataLoader batches 10 URL lookups into 1 query</li>
+      <li>GraphQL query returns less data than equivalent REST call for the same result</li>
+      <li>Auth middleware rejects unauthenticated queries</li>
+    </ul>
+  </div>
+  <nav class="project-nav">
+    <a href="../p16-express-ts/" class="prev"><span class="label">&larr; Previous</span><span class="title">TypeScript + Express REST API with Prisma</span></a>
+    <a href="../p18-docker-deploy/" class="next"><span class="label">Next &rarr;</span><span class="title">Docker, CI/CD &amp; Cloud Deployment</span></a>
+  </nav>
+</div>
+</body>
+</html>
