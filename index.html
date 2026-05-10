@@ -3,334 +3,1120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Backend Engineering Roadmap</title>
+<title>Backend Engineering Roadmap — 15 Projects</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* ---- RESET & BASE ---- */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: oklch(0.13 0.01 55);
+    --bg2: oklch(0.165 0.012 55);
+    --bg3: oklch(0.20 0.015 55);
+    --border: oklch(0.26 0.015 55 / 0.4);
+    --text: oklch(0.90 0.008 55);
+    --text2: oklch(0.70 0.015 55);
+    --text3: oklch(0.55 0.012 55);
+    --accent: oklch(0.55 0.06 250);
+    --accent2: oklch(0.58 0.06 195);
+    --green: oklch(0.60 0.08 145);
+    --orange: oklch(0.60 0.08 70);
+    --red: oklch(0.55 0.10 25);
+    --pink: oklch(0.55 0.08 350);
+    --font: 'Inter', -apple-system, system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+
+  /* ---- SIDEBAR ---- */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 280px; background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 32px 20px; overflow-y: auto;
+    z-index: 100;
+  }
+  .sidebar h2 {
+    font-size: 13px; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--text2);
+    margin-bottom: 20px;
+  }
+  .sidebar nav { display: flex; flex-direction: column; gap: 2px; }
+  .sidebar a {
+    color: var(--text2); text-decoration: none;
+    font-size: 13px; padding: 6px 12px;
+    border-radius: 6px; transition: all .2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sidebar a:hover, .sidebar a.active { color: var(--text); background: var(--bg3); }
+  .sidebar .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 6px;
+    background: var(--bg3); font-size: 11px; font-weight: 700; color: var(--text2);
+    flex-shrink: 0;
+  }
+  .sidebar a:hover .num { background: var(--accent); color: oklch(0.95 0.005 55); }
+  .sidebar a.completed .num { background: var(--green); color: oklch(0.95 0.005 55); }
+  .sidebar .tag {
+    font-size: 10px; padding: 1px 6px; border-radius: 4px;
+    margin-left: auto; font-weight: 600;
+  }
+  .tag-py { background: oklch(0.55 0.06 250 / 0.2); color: var(--accent); }
+  .tag-ts { background: oklch(0.60 0.08 145 / 0.2); color: var(--green); }
+  .tag-mix { background: oklch(0.55 0.08 350 / 0.2); color: var(--pink); }
+
+  /* ---- MAIN ---- */
+  .main { margin-left: 280px; flex: 1; min-height: 100vh; }
+  section { padding: 40px 48px 48px; max-width: 960px; }
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    section { padding: 24px 20px 32px; }
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    padding: 64px 48px 48px; max-width: 960px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: 40px; font-weight: 800; line-height: 1.15;
+    color: var(--text); margin-bottom: 12px;
+  }
+  .hero p { font-size: 16px; color: var(--text2); max-width: 680px; }
+  .hero .meta {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: 24px; font-size: 13px; color: var(--text2);
+  }
+  .hero .meta span { display: flex; align-items: center; }
+  .hero .meta span + span::before {
+    content: ''; display: inline-block;
+    width: 3px; height: 3px; border-radius: 50%;
+    background: var(--border); margin: 0 14px;
+  }
+
+  /* ---- PROJECT CARD ---- */
+  .project {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 28px;
+  }
+  .project-header {
+    display: flex; align-items: flex-start; gap: 16px;
+    margin-bottom: 16px;
+  }
+  .project-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--bg3); font-weight: 800; font-size: 15px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+  .project-title-group { flex: 1; }
+  .project-title {
+    font-size: 22px; font-weight: 700; margin-bottom: 2px;
+  }
+  .project-subtitle {
+    font-size: 13px; color: var(--text2);
+  }
+  .project-stack {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .project-stack span {
+    font-size: 11px; padding: 3px 10px; border-radius: 6px;
+    background: var(--bg3); border: 1px solid var(--border);
+    font-family: var(--mono); color: var(--text2);
+  }
+  .project-desc { color: var(--text2); margin-bottom: 16px; font-size: 14px; }
+
+  .section-label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--text2); font-weight: 600; margin-bottom: 8px; margin-top: 20px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+
+  .pill-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .pill {
+    font-size: 12px; padding: 3px 10px; border-radius: 6px;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .grid-2 {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 12px;
+  }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .box {
+    background: var(--bg3); border-radius: 10px; padding: 18px 20px;
+    border: 1px solid var(--border);
+  }
+  .box h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+            color: var(--accent2); margin-bottom: 8px; }
+  .box ul { list-style: none; font-size: 13px; color: var(--text2); }
+  .box li { padding: 4px 0 4px 18px; position: relative; line-height: 1.5; }
+  .box li::before { content: '\25B6'; position: absolute; left: 0; color: var(--accent2); font-weight: 700; font-size: 11px; }
+
+  .verify-box {
+    background: oklch(0.60 0.08 145 / 0.08);
+    border: 1px solid oklch(0.60 0.08 145 / 0.2);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 8px;
+  }
+  .verify-box h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+                   color: var(--green); margin-bottom: 10px; }
+  .verify-box ul { list-style: none; font-size: 13px; color: var(--text2); }
+  .verify-box li { padding: 4px 0 4px 20px; position: relative; line-height: 1.5; }
+  .verify-box li::before { content: '\2713'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-size: 14px; }
+
+  .read-box {
+    background: oklch(0.60 0.08 70 / 0.07);
+    border: 1px solid oklch(0.60 0.08 70 / 0.15);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 8px;
+  }
+  .read-box h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+                 color: var(--orange); margin-bottom: 8px; }
+  .read-box ul { list-style: none; font-size: 13px; color: var(--text2); }
+  .read-box li { padding: 4px 0 4px 18px; position: relative; line-height: 1.5; }
+  .read-box li::before { content: '\25B7'; position: absolute; left: 0; color: var(--orange); }
+
+  .new-box {
+    background: oklch(0.55 0.06 250 / 0.07);
+    border: 1px solid oklch(0.55 0.06 250 / 0.15);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 8px;
+  }
+  .new-box h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+                color: var(--accent); margin-bottom: 8px; }
+  .new-box ul { list-style: none; font-size: 13px; color: var(--text2); }
+  .new-box li { padding: 4px 0 4px 18px; position: relative; line-height: 1.5; }
+  .new-box li::before { content: '+'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  /* ---- ARCHITECTURE DIAGRAM ---- */
+  .arch { margin: 24px 0; }
+  .arch svg { width: 100%; max-width: 800px; display: block; margin: 0 auto; }
+
+  /* ---- TECH TABLE ---- */
+  .tech-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+  .tech-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .tech-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .tech-card p { font-size: 12px; color: var(--text2); }
+  .tech-card .level {
+    display: inline-block; font-size: 10px; padding: 2px 8px;
+    border-radius: 4px; margin-top: 6px; font-weight: 600;
+  }
+  .level-core { background: oklch(0.55 0.06 250 / 0.15); color: var(--accent); }
+  .level-nice { background: oklch(0.58 0.06 195 / 0.12); color: var(--accent2); }
+
+  .connector { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 4px 0; color: var(--text2); font-size: 12px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+</style>
 </head>
 <body>
 
-<nav class="top-nav">
-  <a href="index.html" class="logo"><span>&#9670;</span> Backend Roadmap</a>
-  <a href="index.html">Overview</a>
-  <a href="#tech">Stack</a>
-</nav>
-
-<div class="container">
-  <div class="hero">
-    <h1>Backend Engineering Roadmap</h1>
-    <p>18 projects from HTTP fundamentals to production-ready microservices. Each builds on the last, introducing one first-principle concept at a time.</p>
-    <div class="meta">
-      <span>Python + TypeScript</span>
-      <span>Startup-ready</span>
-      <span>5-7 months</span>
-      <span>First-principles</span>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label">The Projects</div>
-
-    <!-- PHASE 1 -->
-    <div class="phase-block">
-      <div class="phase-block-header">
-        <h3>Phase 1 / Foundations</h3>
-        <div class="phase-desc">TCP, HTTP, REST, web frameworks</div>
-      </div>
-      <div class="project-list">
-        <a href="projects/p01-http-server/">
-          <span class="num">01</span>
-          <span class="info">
-            <span class="name">Custom HTTP Server from Scratch</span>
-            <span class="desc">Raw sockets, parse HTTP/1.1, build a router with no frameworks</span>
-          </span>
-          <span class="phase-tag phase-foundations">Python</span>
-        </a>
-        <a href="projects/p02-rest-api/">
-          <span class="num">02</span>
-          <span class="info">
-            <span class="name">RESTful Library Management API</span>
-            <span class="desc">FastAPI, Pydantic, OpenAPI, clean RESTful design</span>
-          </span>
-          <span class="phase-tag phase-foundations">Python</span>
-        </a>
-        <a href="projects/p03-url-shortener/">
-          <span class="num">03</span>
-          <span class="info">
-            <span class="name">URL Shortener with PostgreSQL</span>
-            <span class="desc">SQLAlchemy, Alembic, indexing, connection pooling</span>
-          </span>
-          <span class="phase-tag phase-foundations">Python</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PHASE 2 -->
-    <div class="phase-block">
-      <div class="phase-block-header">
-        <h3>Phase 2 - Access &amp; Control</h3>
-        <div class="phase-desc">Authentication, authorization, rate limiting, middleware</div>
-      </div>
-      <div class="project-list">
-        <a href="projects/p04-auth/">
-          <span class="num">04</span>
-          <span class="info">
-            <span class="name">Authentication &amp; Authorization</span>
-            <span class="desc">JWT, bcrypt, OAuth2, RBAC, refresh tokens</span>
-          </span>
-          <span class="phase-tag phase-access">Python</span>
-        </a>
-        <a href="projects/p05-rate-limiter/">
-          <span class="num">05</span>
-          <span class="info">
-            <span class="name">Rate Limiter &amp; API Gateway Middleware</span>
-            <span class="desc">Redis, token bucket, sliding window, ASGI middleware</span>
-          </span>
-          <span class="phase-tag phase-access">Python</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PHASE 3 -->
-    <div class="phase-block">
-      <div class="phase-block-header">
-        <h3>Phase 3 - Real-time &amp; Async</h3>
-        <div class="phase-desc">WebSockets, pub/sub, async processing, file handling</div>
-      </div>
-      <div class="project-list">
-        <a href="projects/p06-websocket-chat/">
-          <span class="num">06</span>
-          <span class="info">
-            <span class="name">Real-time Chat with WebSockets</span>
-            <span class="desc">Full-duplex, rooms, Redis Pub/Sub, connection management</span>
-          </span>
-          <span class="phase-tag phase-realtime">Python</span>
-        </a>
-        <a href="projects/p07-file-upload/">
-          <span class="num">07</span>
-          <span class="info">
-            <span class="name">File Upload Service with Async Processing</span>
-            <span class="desc">Celery, image thumbnails, content-addressable storage, CDN simulation</span>
-          </span>
-          <span class="phase-tag phase-realtime">Python</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PHASE 4 -->
-    <div class="phase-block">
-      <div class="phase-block-header">
-        <h3>Phase 4 - Reliability &amp; Correctness</h3>
-        <div class="phase-desc">Transactions, concurrency, testing methodology</div>
-      </div>
-      <div class="project-list">
-        <a href="projects/p08-order-service/">
-          <span class="num">08</span>
-          <span class="info">
-            <span class="name">E-commerce Order Service</span>
-            <span class="desc">ACID, optimistic/pessimistic locking, idempotency, saga pattern</span>
-          </span>
-          <span class="phase-tag phase-reliability">Python</span>
-        </a>
-        <a href="projects/p09-testing/">
-          <span class="num">09</span>
-          <span class="info">
-            <span class="name">Testing Deep-Dive</span>
-            <span class="desc">pytest, fixtures, mocking, integration tests, testcontainers</span>
-          </span>
-          <span class="phase-tag phase-reliability">Python</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PHASE 5 -->
-    <div class="phase-block">
-      <div class="phase-block-header">
-        <h3>Phase 5 - Events &amp; Communication</h3>
-        <div class="phase-desc">Full-text search, message queues, webhooks, gRPC</div>
-      </div>
-      <div class="project-list">
-        <a href="projects/p10-search-engine/">
-          <span class="num">10</span>
-          <span class="info">
-            <span class="name">Full-Text Search Engine</span>
-            <span class="desc">Inverted indexes, TF-IDF, BM25, fuzzy search, type-ahead</span>
-          </span>
-          <span class="phase-tag phase-events">Python</span>
-        </a>
-        <a href="projects/p11-job-worker/">
-          <span class="num">11</span>
-          <span class="info">
-            <span class="name">Background Job Worker with RabbitMQ</span>
-            <span class="desc">Message queues, worker pools, retry, dead letter queues</span>
-          </span>
-          <span class="phase-tag phase-events">Python</span>
-        </a>
-        <a href="projects/p12-webhooks/">
-          <span class="num">12</span>
-          <span class="info">
-            <span class="name">Webhook Delivery System</span>
-            <span class="desc">Event-driven, HMAC signatures, retry with backoff, idempotency</span>
-          </span>
-          <span class="phase-tag phase-events">Python</span>
-        </a>
-        <a href="projects/p13-grpc/">
-          <span class="num">13</span>
-          <span class="info">
-            <span class="name">gRPC Microservice</span>
-            <span class="desc">Protocol Buffers, inter-service RPC, streaming</span>
-          </span>
-          <span class="phase-tag phase-events">gRPC</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PHASE 6 -->
-    <div class="phase-block">
-      <div class="phase-block-header">
-        <h3>Phase 6 - Performance &amp; Visibility</h3>
-        <div class="phase-desc">Caching, monitoring, distributed tracing</div>
-      </div>
-      <div class="project-list">
-        <a href="projects/p14-caching/">
-          <span class="num">14</span>
-          <span class="info">
-            <span class="name">Caching Layer &amp; CDN Simulator</span>
-            <span class="desc">LRU, cache-aside, write-through, thundering herd, TTL</span>
-          </span>
-          <span class="phase-tag phase-performance">Python</span>
-        </a>
-        <a href="projects/p15-observability/">
-          <span class="num">15</span>
-          <span class="info">
-            <span class="name">Observability Stack</span>
-            <span class="desc">Prometheus, Grafana, OpenTelemetry, structured logging</span>
-          </span>
-          <span class="phase-tag phase-performance">Python</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PHASE 7 -->
-    <div class="phase-block">
-      <div class="phase-block-header">
-        <h3>Phase 7 - TypeScript &amp; Modern APIs</h3>
-        <div class="phase-desc">TypeScript backend, Express, Prisma, GraphQL</div>
-      </div>
-      <div class="project-list">
-        <a href="projects/p16-express-ts/">
-          <span class="num">16</span>
-          <span class="info">
-            <span class="name">TypeScript + Express REST API with Prisma</span>
-            <span class="desc">Express, Prisma ORM, Zod validation, TypeScript backend patterns</span>
-          </span>
-          <span class="phase-tag phase-typescript">TypeScript</span>
-        </a>
-        <a href="projects/p17-graphql/">
-          <span class="num">17</span>
-          <span class="info">
-            <span class="name">GraphQL API Wrapper</span>
-            <span class="desc">Apollo, DataLoader, subscriptions, code-first schema</span>
-          </span>
-          <span class="phase-tag phase-typescript">TypeScript</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PHASE 8 -->
-    <div class="phase-block">
-      <div class="phase-block-header">
-        <h3>Phase 8 - Production</h3>
-        <div class="phase-desc">Containerization, CI/CD, cloud deployment</div>
-      </div>
-      <div class="project-list">
-        <a href="projects/p18-docker-deploy/">
-          <span class="num">18</span>
-          <span class="info">
-            <span class="name">Docker, CI/CD &amp; Cloud Deployment</span>
-            <span class="desc">Multi-service Docker Compose, GitHub Actions, deploy to Render/Fly.io</span>
-          </span>
-          <span class="phase-tag phase-production">DevOps</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="section" id="tech">
-    <div class="section-label">Technology Stack</div>
-    <p class="text-2 mb-16">Core skills to know deeply. Nice-to-haves to understand.</p>
-    <div class="tech-overview">
-      <div class="tech-item"><h4>Python</h4><p>Primary language</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>TypeScript</h4><p>Secondary language</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>FastAPI</h4><p>Web framework</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>PostgreSQL</h4><p>Primary database</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>Redis</h4><p>Caching &amp; pub/sub</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>SQLAlchemy</h4><p>ORM toolkit</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>Docker</h4><p>Containerization</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>Docker Compose</h4><p>Orchestration</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>Git</h4><p>Version control</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>REST APIs</h4><p>API design</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>pytest</h4><p>Testing</p><span class="lvl lvl-core">Core</span></div>
-      <div class="tech-item"><h4>RabbitMQ</h4><p>Message broker</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>Celery</h4><p>Task queue</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>JWT / OAuth2</h4><p>Auth protocols</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>Prometheus</h4><p>Metrics</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>OpenTelemetry</h4><p>Tracing</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>GraphQL</h4><p>API paradigm</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>WebSockets</h4><p>Real-time</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>gRPC</h4><p>RPC framework</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>Nginx</h4><p>Reverse proxy</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>GitHub Actions</h4><p>CI/CD</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>Express</h4><p>Node framework</p><span class="lvl lvl-nice">Nice</span></div>
-      <div class="tech-item"><h4>Prisma</h4><p>TypeScript ORM</p><span class="lvl lvl-nice">Nice</span></div>
-    </div>
-  </div>
-
+<!-- ====== SIDEBAR ====== -->
+<aside class="sidebar">
+  <h2>Projects</h2>
+  <nav>
+    <a href="#p1"><span class="num">01</span> HTTP Server</a>
+    <a href="#p2"><span class="num">02</span> REST API &#183; Library</a>
+    <a href="#p3"><span class="num">03</span> URL Shortener</a>
+    <a href="#p4"><span class="num">04</span> Auth System</a>
+    <a href="#p5"><span class="num">05</span> Rate Limiter</a>
+    <a href="#p6"><span class="num">06</span> WebSocket Chat</a>
+    <a href="#p7"><span class="num">07</span> File Upload</a>
+    <a href="#p8"><span class="num">08</span> Order Service</a>
+    <a href="#p9"><span class="num">09</span> Search Engine</a>
+    <a href="#p10"><span class="num">10</span> Job Worker</a>
+    <a href="#p11"><span class="num">11</span> Webhooks</a>
+    <a href="#p12"><span class="num">12</span> Caching Layer</a>
+    <a href="#p13"><span class="num">13</span> Observability</a>
+    <a href="#p14"><span class="num">14</span> GraphQL</a>
+    <a href="#p15"><span class="num">15</span> Docker &amp; CI/CD</a>
+  </nav>
   <hr>
+  <h2>Stack</h2>
+  <nav>
+    <a href="#tech-stack"><span class="num">T</span> Technology Stack</a>
+  </nav>
+</aside>
 
-  <div class="section">
-    <div class="section-label">Concept Dependencies</div>
-    <div class="concept-map">
-      <div><strong>TCP/Sockets</strong> &rarr; HTTP &rarr; REST &rarr; FastAPI &rarr; Database CRUD &rarr; Auth</div>
-      <div><strong>HTTP</strong> &rarr; Middleware &rarr; Rate Limiting &rarr; Caching</div>
-      <div><strong>Database</strong> &rarr; Transactions &rarr; Concurrency Control &rarr; Idempotency</div>
-      <div><strong>WebSockets</strong> &rarr; Pub/Sub &rarr; Real-time</div>
-      <div><strong>Message Queues</strong> &rarr; Async Workers &rarr; Webhooks &rarr; Event-Driven</div>
-      <div><strong>Protocol Buffers</strong> &rarr; gRPC &rarr; Service Communication</div>
-      <div><strong>Search Indexes</strong> &rarr; Tokenization &rarr; Ranking (TF-IDF / BM25)</div>
-      <div><strong>Logging</strong> + <strong>Metrics</strong> + <strong>Tracing</strong> &rarr; Observability</div>
-      <div><strong>REST</strong> &rarr; GraphQL &rarr; DataLoader</div>
-      <div><strong>Docker</strong> + <strong>Compose</strong> + <strong>Actions</strong> &rarr; Cloud Deploy</div>
+<!-- ====== MAIN ====== -->
+<div class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Backend Engineering Roadmap</h1>
+  <p>15 projects designed to take you from HTTP fundamentals to production-ready microservices. Every project builds on the last, introducing one new first-principle concept at a time. Complete these and you will be comfortable with 90% of what startups ask for at the fresher level.</p>
+  <div class="meta">
+    <span>Python + TypeScript</span>
+    <span>Fresher / Startup-ready</span>
+    <span>~4&ndash;6 months</span>
+    <span>First-principles focus</span>
+  </div>
+</div>
+
+<!-- ====== PROJECTS ====== -->
+<section>
+
+<!-- PROJECT 1 -->
+<div class="project" id="p1">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--accent);">01</div>
+    <div class="project-title-group">
+      <div class="project-title">Custom HTTP Server from Scratch</div>
+      <div class="project-subtitle">Understand the protocol before using the framework</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>socket</span><span>HTTP/1.1</span><span>TCP</span>
+  </div>
+  <p class="project-desc">Build a bare-bones HTTP/1.1 server using only Python's <code>socket</code> library. No frameworks, no web libraries. Your server should parse raw HTTP requests, route them to handlers, and return proper responses. This is the foundation everything else sits on.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>How TCP works (3-way handshake, sockets)</li>
+        <li>HTTP/1.1 message format (request line, headers, body)</li>
+        <li>HTTP methods: GET, POST, PUT, DELETE</li>
+        <li>Status codes (200, 201, 400, 404, 500)</li>
+        <li>RFC 7230 &mdash; HTTP/1.1 Message Syntax</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>Socket programming and event loops</li>
+        <li>Parsing raw TCP data into HTTP messages</li>
+        <li>Concurrency with threads vs async</li>
+        <li>Writing a basic router from scratch</li>
+        <li>Debugging network protocols (curl, telnet)</li>
+      </ul>
     </div>
   </div>
 
-  <hr>
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>curl -v http://localhost:8080/ returns a valid HTTP response with headers</li>
+      <li>Your server handles GET /, POST /data, 404 for unknown routes</li>
+      <li>Concurrent connections work (open 3 tabs simultaneously)</li>
+      <li>Returns proper Content-Type and Content-Length headers</li>
+      <li>Can serve a static HTML file from disk</li>
+    </ul>
+  </div>
+</div>
 
-  <div class="section">
-    <div class="section-label">How to Use This Roadmap</div>
-    <div class="how-to-grid">
-      <div class="card">
-        <h2>1. Build, Don't Copy</h2>
-        <p>Type every line yourself. Read error messages. Use debuggers. Understand before moving on.</p>
-      </div>
-      <div class="card">
-        <h2>2. Read Deeply</h2>
-        <p>When stuck, search for why not how. Read RFCs, source code, and engineering blogs.</p>
-      </div>
-      <div class="card">
-        <h2>3. Verify Every Goal</h2>
-        <p>Each project has concrete verification goals. Don't move on until you pass them all.</p>
-      </div>
-      <div class="card">
-        <h2>4. Portfolio Ready</h2>
-        <p>Push every project to GitHub. Write good READMEs. Be ready to explain your design choices.</p>
-      </div>
+<!-- PROJECT 2 -->
+<div class="project" id="p2">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--accent);">02</div>
+    <div class="project-title-group">
+      <div class="project-title">RESTful Library Management API</div>
+      <div class="project-subtitle">Your first real framework &mdash; FastAPI with in-memory storage</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>FastAPI</span><span>Pydantic</span><span>Uvicorn</span>
+  </div>
+  <p class="project-desc">Build a library API (books, authors, members) using FastAPI. Store data in-memory (a Python dict). Focus on clean RESTful design, request validation with Pydantic, and automatic OpenAPI documentation. You'll feel the power of a framework after building from scratch.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>REST architectural constraints (stateless, uniform interface)</li>
+        <li>Resource naming conventions (/books, /books/{id})</li>
+        <li>Request validation &amp; serialization</li>
+        <li>Dependency injection concept</li>
+        <li>OpenAPI / Swagger UI</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>FastAPI application structure</li>
+        <li>Pydantic models for request/response</li>
+        <li>Path/query parameter handling</li>
+        <li>Automatic API docs generation</li>
+        <li>Error handling with HTTPException</li>
+      </ul>
     </div>
   </div>
 
-  <div class="footer">
-    Built for backend engineers who want to build real things.
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>GET /books returns all books; POST /books creates one with validation</li>
+      <li>GET /books/{id}, PUT /books/{id}, DELETE /books/{id} all work</li>
+      <li>Pydantic rejects invalid data with 422 + clear error message</li>
+      <li>/docs shows interactive Swagger UI</li>
+      <li>You can explain what each REST constraint means in practice</li>
+    </ul>
   </div>
+</div>
+
+<!-- PROJECT 3 -->
+<div class="project" id="p3">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--accent);">03</div>
+    <div class="project-title-group">
+      <div class="project-title">URL Shortener with PostgreSQL</div>
+      <div class="project-subtitle">Persistence &mdash; first real database. SQLAlchemy, migrations, indexes</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>SQLAlchemy</span><span>Alembic</span>
+  </div>
+  <p class="project-desc">Build a URL shortener (like bit.ly). Store short_code <-> long_url mappings in PostgreSQL. Use SQLAlchemy as the ORM and Alembic for schema migrations. Learn connection pooling, indexing, and the N+1 query problem.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Relational database fundamentals (tables, rows, PKs)</li>
+        <li>SQL CRUD operations (SELECT, INSERT, UPDATE, DELETE)</li>
+        <li>Database indexes (B-tree) &mdash; when and why</li>
+        <li>ORM vs raw SQL trade-offs</li>
+        <li>Alembic migration workflow</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>SQLAlchemy model definitions &amp; relationships</li>
+        <li>Writing and running Alembic migrations</li>
+        <li>Connection pooling with asyncpg/psycopg2</li>
+        <li>Base62 encoding for short codes</li>
+        <li>Redirect logic (302 vs 301)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>POST /shorten returns a short URL; visiting it redirects</li>
+      <li>Database persists across server restarts</li>
+      <li>Alembic can upgrade/downgrade schema</li>
+      <li>Index on short_code makes lookups fast (EXPLAIN ANALYZE)</li>
+      <li>Same long URL can be shortened multiple times (or deduped)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 4 -->
+<div class="project" id="p4">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--pink);">04</div>
+    <div class="project-title-group">
+      <div class="project-title">Authentication &amp; Authorization</div>
+      <div class="project-subtitle">Add users, JWT tokens, OAuth2, and RBAC to the URL shortener</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>FastAPI</span><span>JWT</span><span>bcrypt</span><span>OAuth2</span>
+  </div>
+  <p class="project-desc">Add user registration and login to the URL shortener. Implement JWT access + refresh tokens. Add role-based access control (admin vs regular user). Learn password hashing, token storage, middleware for authentication, and OAuth2 flows.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Password hashing (bcrypt, argon2) &mdash; never store plaintext</li>
+        <li>JWT structure: header.payload.signature</li>
+        <li>Access tokens vs refresh tokens</li>
+        <li>OAuth2 authorization code flow vs implicit flow</li>
+        <li>Common vulnerabilities: CSRF, XSS, timing attacks</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>Implementing registration &amp; login endpoints</li>
+        <li>JWT creation, verification, and refresh</li>
+        <li>Password hashing with bcrypt</li>
+        <li>FastAPI dependency injection for auth middleware</li>
+        <li>Role-based access control (RBAC)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>POST /register creates user; POST /login returns JWT</li>
+      <li>Protected routes return 401 without token</li>
+      <li>Admin-only routes return 403 for regular users</li>
+      <li>Refresh token endpoint issues new access tokens</li>
+      <li>Passwords stored as hashes (never plaintext in DB)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 5 -->
+<div class="project" id="p5">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--accent2);">05</div>
+    <div class="project-title-group">
+      <div class="project-title">Rate Limiter &amp; API Gateway Middleware</div>
+      <div class="project-subtitle">Protect your API with Redis-based rate limiting and middleware</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>FastAPI</span><span>Redis</span><span>middleware</span>
+  </div>
+  <p class="project-desc">Implement rate limiting on your URL shortener using Redis. Support both token bucket and sliding window algorithms. Build it as reusable ASGI middleware. Also add request logging, API key validation, and request transformation &mdash; the building blocks of an API gateway.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Token bucket vs sliding window vs leaky bucket</li>
+        <li>Redis data types (STRING, SET, Sorted Set, Lua scripts)</li>
+        <li>ASGI middleware interface</li>
+        <li>Rate limiting headers (X-RateLimit-Remaining, Retry-After)</li>
+        <li>Comparison: local vs distributed rate limiting</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>Writing ASGI middleware</li>
+        <li>Redis atomic operations for rate counting</li>
+        <li>Lua scripting in Redis for atomic window logic</li>
+        <li>Handling race conditions in distributed counters</li>
+        <li>Graceful degradation (fail-open vs fail-closed)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>After N requests in T seconds, API returns 429 Too Many Requests</li>
+      <li>Rate limit resets after the window expires</li>
+      <li>Different users have independent rate limits</li>
+      <li>Middlewares are reusable via FastAPI app.add_middleware()</li>
+      <li>Sliding window and token bucket both implemented and testable</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 6 -->
+<div class="project" id="p6">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--green);">06</div>
+    <div class="project-title-group">
+      <div class="project-title">Real-time Chat with WebSockets</div>
+      <div class="project-subtitle">Full-duplex communication &mdash; rooms, pub/sub, connection management</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>FastAPI</span><span>WebSocket</span><span>Redis Pub/Sub</span><span>HTML/JS</span>
+  </div>
+  <p class="project-desc">Build a real-time multi-room chat application. Users connect via WebSocket, join rooms, send messages. Use Redis Pub/Sub to broadcast across multiple server instances. Manage connection lifecycle (connect, disconnect, reconnect). Build a minimal HTML/JS client to test it.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>WebSocket protocol (upgrade handshake, frames)</li>
+        <li>WebSocket vs SSE vs long polling</li>
+        <li>Pub/sub pattern (publishers, subscribers, channels)</li>
+        <li>Connection state management (open, close, ping/pong)</li>
+        <li>Scaling WebSockets (sticky sessions, external pub/sub)</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>WebSocket endpoint in FastAPI</li>
+        <li>Managing connected clients (set of connections)</li>
+        <li>Redis Pub/Sub for cross-instance broadcasting</li>
+        <li>Heartbeat/ping-pong to detect dead connections</li>
+        <li>Graceful shutdown (drain connections)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>Two browser tabs can chat in real-time</li>
+      <li>Messages are scoped to rooms</li>
+      <li>Disconnecting a client doesn't crash the server</li>
+      <li>Run 2 server instances &mdash; messages sync via Redis</li>
+      <li>Server handles 100+ concurrent WebSocket connections</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 7 -->
+<div class="project" id="p7">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--orange);">07</div>
+    <div class="project-title-group">
+      <div class="project-title">File Upload Service with Async Processing</div>
+      <div class="project-subtitle">Multipart uploads, image processing, task queues, CDN simulation</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>FastAPI</span><span>Celery</span><span>Redis</span><span>Pillow</span>
+  </div>
+  <p class="project-desc">Build a service that accepts file uploads, validates them, processes them asynchronously (e.g., generate thumbnails). Use Celery + Redis for background tasks. Store files with a content-addressable scheme. Simulate a CDN by serving from a different port/domain.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Multipart/form-data encoding</li>
+        <li>Task queues: why and when</li>
+        <li>Celery architecture (broker, worker, result backend)</li>
+        <li>Content-addressable storage (SHA hash as filename)</li>
+        <li>CDN concepts (origin pull, edge cache)</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>File upload handling (UploadFile, streaming)</li>
+        <li>Celery task definition and execution</li>
+        <li>Image processing with Pillow/Sharp</li>
+        <li>Async task result polling or WebSocket notification</li>
+        <li>Serving static files from a separate "CDN" server</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>Upload a 10MB file &mdash; it doesn't block other requests</li>
+      <li>Image upload auto-generates 3 thumbnail sizes</li>
+      <li>Celery worker processes in a separate process</li>
+      <li>Duplicate files are deduplicated (content hash)</li>
+      <li>Client can poll /task/{id} to check status</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 8 -->
+<div class="project" id="p8">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--red);">08</div>
+    <div class="project-title-group">
+      <div class="project-title">E-commerce Order Service</div>
+      <div class="project-subtitle">Transactions, inventory contention, idempotency, saga pattern</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>SQLAlchemy</span>
+  </div>
+  <p class="project-desc">Build an order management system with products, inventory, carts, and orders. The core challenge: handle concurrent purchases correctly. Implement optimistic and pessimistic locking. Use database transactions for atomicity. Add idempotency keys to prevent double charges.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>ACID properties (Atomicity, Consistency, Isolation, Durability)</li>
+        <li>Transaction isolation levels (READ COMMITTED, SERIALIZABLE)</li>
+        <li>Pessimistic vs optimistic locking</li>
+        <li>Idempotency keys &mdash; why payments need them</li>
+        <li>Saga pattern for distributed transactions</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>SQLAlchemy session management &amp; transactions</li>
+        <li>SELECT ... FOR UPDATE (pessimistic lock)</li>
+        <li>Optimistic locking with version columns</li>
+        <li>Idempotency key creation and dedup</li>
+        <li>Compensating transactions (saga pattern)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>Two users buying the last item &mdash; one succeeds, one gets 409</li>
+      <li>Same idempotency key returns same result, doesn't double-order</li>
+      <li>Inventory count is always accurate after concurrent purchases</li>
+      <li>Order creation is atomic (items + payment + inventory all or nothing)</li>
+      <li>Partial failure triggers compensating actions (rollback)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 9 -->
+<div class="project" id="p9">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--orange);">09</div>
+    <div class="project-title-group">
+      <div class="project-title">Full-Text Search Engine</div>
+      <div class="project-subtitle">Inverted indexes, relevance scoring, type-ahead, fuzzy search</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>PostgreSQL FTS</span><span>TypeScript/Node</span><span>Elasticsearch (optional)</span>
+  </div>
+  <p class="project-desc">Build a search service over the URL shortener's bookmarks or a set of documents. Implement full-text search using PostgreSQL's built-in FTS first, then optionally rewrite with Elasticsearch. Learn inverted indexes, tokenization, stemming, relevance scoring (TF-IDF, BM25), and typo-tolerant search.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Inverted index data structure</li>
+        <li>Tokenization, stemming, stop words</li>
+        <li>TF-IDF and BM25 ranking algorithms</li>
+        <li>PostgreSQL tsvector/tsquery</li>
+        <li>Levenshtein distance for fuzzy matching</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>PostgreSQL full-text search functions</li>
+        <li>Building and querying an inverted index (from scratch)</li>
+        <li>Search relevance tuning (boosting fields)</li>
+        <li>Implementing type-ahead / autocomplete (trigram)</li>
+        <li>Elasticsearch indexing and query DSL (optional stretch)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>Search "blue shoe" finds "blue suede shoes" (stemming works)</li>
+      <li>Relevant results appear before less relevant ones</li>
+      <li>Typo "sho" suggests "shoe" (fuzzy match)</li>
+      <li>Type-ahead returns results after 2 keystrokes</li>
+      <li>Search latency under 200ms for 10K documents</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 10 -->
+<div class="project" id="p10">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--accent);">10</div>
+    <div class="project-title-group">
+      <div class="project-title">Background Job Worker with RabbitMQ</div>
+      <div class="project-subtitle">Message queues, worker pools, retries, dead letter queues</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>RabbitMQ</span><span>Pika</span><span>Docker</span>
+  </div>
+  <p class="project-desc">Build a standalone job worker system. Producers publish jobs (e.g., send email, generate report) to RabbitMQ exchanges/queues. Workers consume, process, ack/nack. Implement retry with exponential backoff, dead letter queues for failed jobs, and a job dashboard API.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Message queue concepts (producer, consumer, queue, exchange)</li>
+        <li>RabbitMQ exchange types (direct, topic, fanout, headers)</li>
+        <li>Message acknowledgments (auto vs manual ack)</li>
+        <li>Dead letter exchanges / queues</li>
+        <li>Retry strategies: exponential backoff, jitter</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>AMQP protocol with Pika library</li>
+        <li>Declaring exchanges, queues, bindings</li>
+        <li>Reliable delivery (publisher confirms, consumer ack)</li>
+        <li>Dead letter handling for poison messages</li>
+        <li>Graceful worker shutdown (prefetch, drain)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>Job published survives worker restart (persistent messages)</li>
+      <li>Failed job retries 3 times with backoff, then goes to DLQ</li>
+      <li>Multiple workers share the queue (competing consumers)</li>
+      <li>Job status tracked (queued, running, completed, failed)</li>
+      <li>API endpoint to view job status and retry failed jobs</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 11 -->
+<div class="project" id="p11">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--accent2);">11</div>
+    <div class="project-title-group">
+      <div class="project-title">Webhook Delivery System</div>
+      <div class="project-subtitle">Event-driven architecture, reliable delivery, signatures, retry</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>FastAPI</span><span>RabbitMQ</span><span>Redis</span><span>TypeScript</span>
+  </div>
+  <p class="project-desc">Build a webhook system on top of the URL shortener. When a URL is accessed, fire a webhook to the registered callback URL. Implement reliable delivery with retry + backoff, payload signing (HMAC-SHA256), idempotency via event IDs, and a webhook dashboard for managing subscriptions.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Webhook pattern (server-to-server callback)</li>
+        <li>HMAC signatures for payload verification</li>
+        <li>Deliverability: retry strategies, timeouts, circuit breakers</li>
+        <li>Event sourcing vs webhooks</li>
+        <li>Stripe/Svix webhook design patterns</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>Event emission on resource changes</li>
+        <li>Webhook delivery worker with retry logic</li>
+        <li>HMAC payload signing and verification</li>
+        <li>Idempotent event processing (dedup by event_id)</li>
+        <li>Webhook secret management and rotation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>Visiting a shortened URL triggers a webhook to registered endpoint</li>
+      <li>Webhook payload includes HMAC signature header</li>
+      <li>Failed delivery retries 5 times with exponential backoff</li>
+      <li>Receiver can verify payload integrity using the shared secret</li>
+      <li>Webhook history is queryable via API</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 12 -->
+<div class="project" id="p12">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--green);">12</div>
+    <div class="project-title-group">
+      <div class="project-title">Caching Layer &amp; CDN Simulator</div>
+      <div class="project-subtitle">Cache strategies, invalidation, distributed caching, TTL</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>Redis</span><span>FastAPI</span><span>LRU</span>
+  </div>
+  <p class="project-desc">Build a caching layer for the URL shortener and file service. Implement multiple cache strategies: cache-aside, write-through, write-behind. Build an LRU cache from scratch. Add Redis-based distributed caching with TTL. Implement cache invalidation on data updates. Simulate a CDN edge cache that expires and re-fetches.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Cache strategies (cache-aside, read-through, write-through)</li>
+        <li>Cache invalidation: TTL, event-driven, manual</li>
+        <li>LRU, LFU eviction policies</li>
+        <li>Thundering herd problem and mitigation</li>
+        <li>Redis data structures for caching (SET, Hash, Sorted Set)</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>Implementing LRU cache (doubly linked list + hashmap)</li>
+        <li>Redis caching with serialization (JSON/protobuf)</li>
+        <li>Cache invalidation hooks on data mutation</li>
+        <li>Mutex-based thundering herd prevention</li>
+        <li>Stale-while-revalidate pattern</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>Cache hit serves response in &lt;5ms, miss in &lt;50ms (measurable)</li>
+      <li>Updating a URL clears its cache entry</li>
+      <li>LRU eviction works when cache is full</li>
+      <li>Concurrent requests for same missing key don't all hit DB</li>
+      <li>TTL expiration auto-refreshes on next request</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 13 -->
+<div class="project" id="p13">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--pink);">13</div>
+    <div class="project-title-group">
+      <div class="project-title">Observability Stack</div>
+      <div class="project-subtitle">Structured logging, metrics, traces, dashboards</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Python</span><span>Prometheus</span><span>Grafana</span><span>OpenTelemetry</span><span>ELK</span>
+  </div>
+  <p class="project-desc">Add structured logging, Prometheus metrics, and OpenTelemetry tracing to your URL shortener. Ship logs to Elasticsearch and visualize in Kibana. Create a Grafana dashboard showing request rate, error rate, latency (p50/p95/p99), and cache hit ratio. Instrument a distributed trace across the webhook delivery flow.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>The 3 pillars of observability: logs, metrics, traces</li>
+        <li>Structured logging (JSON format, log levels)</li>
+        <li>Prometheus metric types: Counter, Gauge, Histogram, Summary</li>
+        <li>OpenTelemetry: traces, spans, context propagation</li>
+        <li>RED vs USE method for dashboard design</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>JSON structured logging (structlog / python-json-logger)</li>
+        <li>Prometheus client instrumentation in FastAPI</li>
+        <li>Custom metrics (request count, latency histogram)</li>
+        <li>OpenTelemetry auto-instrumentation + custom spans</li>
+        <li>Grafana dashboard creation and alerting</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>/metrics endpoint exposes Prometheus-formatted metrics</li>
+      <li>Grafana dashboard shows live request rate and p99 latency</li>
+      <li>Logs are JSON with request_id, service_name, duration</li>
+      <li>A single request creates a trace visible in Jaeger/Zipkin</li>
+      <li>Dashboard has an alert panel for error rate > 5%</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 14 -->
+<div class="project" id="p14">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--orange);">14</div>
+    <div class="project-title-group">
+      <div class="project-title">GraphQL API Wrapper</div>
+      <div class="project-subtitle">Schema design, resolvers, DataLoader, subscriptions</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>TypeScript</span><span>GraphQL</span><span>Apollo/TypeGraphQL</span><span>DataLoader</span>
+  </div>
+  <p class="project-desc">Build a GraphQL API that wraps the URL shortener REST API. Implement a GraphQL schema with queries, mutations, and subscriptions (realtime events). Use DataLoader to solve the N+1 problem. Compare performance with the REST version. Write this in TypeScript to gain full-strack TypeScript confidence.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>GraphQL type system (Schema, Query, Mutation, Subscription)</li>
+        <li>Resolvers and resolver chain</li>
+        <li>N+1 problem and DataLoader batching/caching</li>
+        <li>GraphQL vs REST: when each makes sense</li>
+        <li>Apollo Server / TypeGraphQL setup</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>TypeScript setup with Node.js</li>
+        <li>GraphQL schema definition (SDL or code-first)</li>
+        <li>DataLoader for batched DB queries</li>
+        <li>GraphQL subscriptions over WebSocket</li>
+        <li>Performance benchmarking: REST vs GraphQL</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>GraphiQL playground works at /graphql</li>
+      <li>Nested query (user + urls) doesn't cause N+1 (check SQL log)</li>
+      <li>Mutation updates data through GraphQL</li>
+      <li>Subscription pushes real-time URL click events</li>
+      <li>You can articulate 3 trade-offs of GraphQL vs REST</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROJECT 15 -->
+<div class="project" id="p15">
+  <div class="project-header">
+    <div class="project-number" style="border-color:var(--accent);">15</div>
+    <div class="project-title-group">
+      <div class="project-title">Containerized Microservices with Docker &amp; CI/CD</div>
+      <div class="project-subtitle">Docker, docker-compose, multi-service orchestration, CI/CD pipeline</div>
+    </div>
+  </div>
+  <div class="project-stack">
+    <span>Docker</span><span>Docker Compose</span><span>GitHub Actions</span><span>Nginx</span>
+  </div>
+  <p class="project-desc">Containerize all previous services (FastAPI app, Celery worker, Redis, PostgreSQL, RabbitMQ, the Node/TypeScript GraphQL server) with Docker. Orchestrate with docker-compose. Add an Nginx reverse proxy. Set up a GitHub Actions CI/CD pipeline that runs lint/tests and builds/pushes images. This is the productionization layer.</p>
+
+  <div class="grid-2">
+    <div class="read-box">
+      <h4>Read Before</h4>
+      <ul>
+        <li>Dockerfile best practices (multi-stage builds, .dockerignore)</li>
+        <li>Docker networking (bridge, host, overlay)</li>
+        <li>Docker Compose: services, volumes, depends_on, healthchecks</li>
+        <li>Reverse proxy with Nginx (load balancing, SSL termination)</li>
+        <li>CI/CD pipeline concepts (lint, test, build, deploy)</li>
+      </ul>
+    </div>
+    <div class="new-box">
+      <h4>New Skills</h4>
+      <ul>
+        <li>Writing optimized Dockerfiles for Python and Node</li>
+        <li>Docker Compose with health checks and depends_on</li>
+        <li>Nginx config for reverse proxy and rate limiting</li>
+        <li>GitHub Actions workflow YAML</li>
+        <li>Environment-based configuration (dev/staging/prod)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify-box">
+    <h4>Verification Goals</h4>
+    <ul>
+      <li>docker-compose up --build starts all 6+ services</li>
+      <li>Nginx reverse proxy serves API at /api and frontend at /</li>
+      <li>GitHub Actions runs tests on every PR</li>
+      <li>CI pipeline builds and tags Docker images</li>
+      <li>A single docker-compose down --volumes cleans everything</li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+
+<!-- ====== TECHNOLOGY STACK ====== -->
+<div id="tech-stack">
+  <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 20px;">
+    Technology Stack
+  </h2>
+  <p style="color:var(--text2);margin-bottom: 24px;">Everything a fresher backend engineer should be comfortable with. Core = must know deeply. Nice = should understand and have used at least once.</p>
+
+  <div class="tech-grid">
+
+    <div class="tech-card"><h4>Python</h4><p>Primary backend language</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>TypeScript</h4><p>Secondary language (GraphQL project)</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>FastAPI</h4><p>Modern Python web framework</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>PostgreSQL</h4><p>Primary database</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>Redis</h4><p>Caching, pub/sub, rate limiting</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>SQLAlchemy</h4><p>ORM &amp; database toolkit</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>Alembic</h4><p>Database migrations</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>Docker</h4><p>Containerization</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>Docker Compose</h4><p>Multi-service orchestration</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>Git</h4><p>Version control</p><span class="level level-core">Core</span></div>
+    <div class="tech-card"><h4>REST APIs</h4><p>API design principles</p><span class="level level-core">Core</span></div>
+
+    <div class="tech-card"><h4>RabbitMQ</h4><p>Message broker</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>Celery</h4><p>Async task queue</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>JWT / OAuth2</h4><p>Authentication protocols</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>Prometheus + Grafana</h4><p>Metrics &amp; dashboards</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>OpenTelemetry</h4><p>Distributed tracing</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>Elasticsearch</h4><p>Full-text search (optional)</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>GraphQL</h4><p>Alternative API paradigm</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>WebSockets</h4><p>Real-time communication</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>Nginx</h4><p>Reverse proxy / load balancer</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>GitHub Actions</h4><p>CI/CD pipelines</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>Pydantic</h4><p>Data validation</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>Pytest</h4><p>Testing framework</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>Linux Basics</h4><p>SSH, file system, processes</p><span class="level level-nice">Nice</span></div>
+    <div class="tech-card"><h4>HTTP/1.1 &amp; HTTP/2</h4><p>Protocol fundamentals</p><span class="level level-nice">Nice</span></div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ====== CONCEPT MAP ====== -->
+<div>
+  <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 20px;">
+    Concept Dependency Map
+  </h2>
+  <p style="color:var(--text2);margin-bottom: 16px;">How the first-principle concepts build on each other across projects.</p>
+
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;font-size:13px;line-height:2;color:var(--text2);">
+    <div><strong style="color:var(--accent);">TCP/Sockets</strong> &rarr; <strong style="color:var(--text);">HTTP</strong> &rarr; <strong style="color:var(--text);">REST</strong> &rarr; <strong style="color:var(--text);">Web Framework</strong> &rarr; <strong style="color:var(--text);">Database CRUD</strong> &rarr; <strong style="color:var(--text);">Auth</strong></div>
+    <div><strong style="color:var(--accent);">HTTP</strong> &rarr; <strong style="color:var(--text);">Middleware</strong> &rarr; <strong style="color:var(--text);">Rate Limiting</strong> &rarr; <strong style="color:var(--text);">Caching</strong></div>
+    <div><strong style="color:var(--accent);">Database</strong> &rarr; <strong style="color:var(--text);">Transactions</strong> &rarr; <strong style="color:var(--text);">Concurrency Control</strong> &rarr; <strong style="color:var(--text);">Idempotency</strong></div>
+    <div><strong style="color:var(--accent);">WebSockets</strong> &rarr; <strong style="color:var(--text);">Pub/Sub</strong> &rarr; <strong style="color:var(--text);">Real-time</strong></div>
+    <div><strong style="color:var(--accent);">Message Queues</strong> &rarr; <strong style="color:var(--text);">Async Workers</strong> &rarr; <strong style="color:var(--text);">Webhooks</strong> &rarr; <strong style="color:var(--text);">Event-Driven</strong></div>
+    <div><strong style="color:var(--accent);">Search Indexes</strong> &rarr; <strong style="color:var(--text);">Tokenization</strong> &rarr; <strong style="color:var(--text);">Ranking (TF-IDF / BM25)</strong></div>
+    <div><strong style="color:var(--accent);">Logging</strong> + <strong style="color:var(--accent);">Metrics</strong> + <strong style="color:var(--accent);">Tracing</strong> &rarr; <strong style="color:var(--text);">Observability</strong></div>
+    <div><strong style="color:var(--accent);">REST</strong> &rarr; <strong style="color:var(--text);">GraphQL</strong> &rarr; <strong style="color:var(--text);">DataLoader</strong></div>
+    <div><strong style="color:var(--accent);">Docker</strong> + <strong style="color:var(--accent);">Compose</strong> + <strong style="color:var(--accent);">CI/CD</strong> &rarr; <strong style="color:var(--text);">Production Deployment</strong></div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ====== LEARNING PRINCIPLES ====== -->
+<div style="margin-bottom: 48px;">
+  <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 20px;">How to Approach This Roadmap</h2>
+
+  <div class="grid-2">
+    <div class="box">
+      <h4>1. Build, Don't Copy</h4>
+      <ul>
+        <li>Type every line yourself</li>
+        <li>Read error messages carefully</li>
+        <li>Use debuggers, don't guess</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>2. Read Deeply When Stuck</h4>
+      <ul>
+        <li>Search for "why" not "how"</li>
+        <li>Read RFCs, source code, blog posts</li>
+        <li>Understand the underlying principle</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>3. Verify Every Goal</h4>
+      <ul>
+        <li>Each project has specific verification goals</li>
+        <li>Don't move on until you pass them all</li>
+        <li>Write automated tests to prove it works</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>4. Portfolio Ready</h4>
+      <ul>
+        <li>Push every project to GitHub</li>
+        <li>Write a good README for each</li>
+        <li>Be ready to explain your design choices</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</section>
 </div>
 
 </body>

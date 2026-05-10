@@ -1,39 +1,43 @@
 # Design System
 
 ## Theme
-Light. Warm off-white background. Used in daytime study sessions at a desk.
+Dark. Warm charcoal base with muted slate accent. Used by developers studying late at night — the page is the main light source in a dim room.
 
 ## Color Strategy
-Restrained. Tinted neutrals carry 95% of the surface. One accent at <=10%.
+Restrained. Tinted warm neutrals carry 92% of the surface. One accent (muted slate blue) at ≤8%.
 
-### Base
-- Background: #faf8f5 (warm off-white)
-- Surface: #ffffff (pure white for cards)
-- Surface hover: #f0ece6 (slightly warm)
-- Border: rgba(0,0,0,0.08) (very subtle)
-- Border strong: rgba(0,0,0,0.12)
+### Base (OKLCH)
+- Background: `oklch(0.13 0.01 55)` — deep warm charcoal
+- Surface: `oklch(0.165 0.012 55)` — elevated panels
+- Surface card: `oklch(0.20 0.015 55)` — project cards
+- Border: `oklch(0.26 0.015 55 / 0.4)`
 
 ### Text
-- Primary: #1a1a1a (near-black, not pure #000)
-- Secondary: #5c5c5c (muted gray)
-- Tertiary: #8a8a8a (for metadata)
-- Muted: #b0b0b0 (for labels)
+- Primary: `oklch(0.90 0.008 55)` — near-white with warm cast
+- Secondary: `oklch(0.70 0.015 55)` — readable mid-tone
+- Tertiary: `oklch(0.55 0.012 55)` — metadata
+- Muted: `oklch(0.42 0.01 55)` — labels
 
 ### Accent
-- Accent: #3d5a80 (slate blue, used sparingly)
-- Accent subtle: rgba(61,90,128,0.08)
+- Accent: `oklch(0.55 0.06 250)` — muted slate blue
+- Accent subtle: `oklch(0.55 0.06 250 / 0.15)`
+- Secondary accent: `oklch(0.58 0.06 195)` — muted teal
 
 ### Semantic
-- Success: #4a7c59 (muted green)
-- Warning: #b85c38 (terracotta)
-- Info: #2d6a7a (muted teal)
+- Success: `oklch(0.60 0.08 145)` — muted green
+- Warning: `oklch(0.60 0.08 70)` — warm amber
+- Error: `oklch(0.55 0.10 25)` — muted red
+- Info: `oklch(0.55 0.08 350)` — muted rose
+- Secondary: `oklch(0.55 0.07 285)` — muted violet
 
 ## Typography
 - Font: Inter
 - Mono: JetBrains Mono
-- Scale: 2.25rem / 1.5rem / 1.15rem / 1rem / 0.875rem / 0.75rem
-- Line height: 1.7 for prose, 1.2 for headings
+- Scale: 2.5rem / 1.75rem / 1.25rem / 1rem / 0.875rem / 0.75rem
+- Line height: 1.75 for prose (compensated for dark mode), 1.2 for headings
+- Letter-spacing: 0.01em on body (dark mode compensation)
 - Body max-width: 70ch
+- Heading wrap: `text-wrap: balance`
 
 ## Spacing
 - Section gap: 5rem (80px)
@@ -46,7 +50,7 @@ Restrained. Tinted neutrals carry 95% of the surface. One accent at <=10%.
 - Duration: 200ms for hover
 
 ## Principles
-- Light and airy, not dark and heavy
-- Lots of whitespace between sections
-- Subtle borders, no heavy shadows
-- Calm, editorial feel
+- Dark and warm, not cold or cyberpunk
+- Reading comfort is #1 — high contrast, compensated typography
+- Subtle borders, no heavy shadows (depth via surface lightness)
+- Calm, editorial feel — like a well-printed technical book at night
